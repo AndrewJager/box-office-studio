@@ -6,7 +6,7 @@
 <p>Click <a href="/logout">here</a> to logout.</p>
 
 {% for post in news %}
-    {{ post.title }}
+    <h5>{{ post.title }}: {{ post.description }}</h5>
     <br>
 {% endfor %}
 
