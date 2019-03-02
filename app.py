@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from functools import wraps
 from flask_sqlalchemy  import SQLAlchemy
+import os
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
