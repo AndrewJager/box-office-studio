@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<h1>{{ studio.name }}</h1>
+<hr>
+<div class="row">
+    <div class="col-4">
+        <h3>Add new movie</h3>
+        <form method="post">
+            <input type="text" placeholder="Big Fish" name="title" value="{{
+                request.form.title }}"> <br>
+            <input type="text" placeholder="Fantasy" name="genre" value="{{
+                request.form.genre }}"> <br>  
+            <div class="form-group p-0">
+                <label for="releaseDate">Release Date (Friday only)</label>
+                <input type="date" id="releaseDate" name="release_date" min="{{ system.currentDate }}" value="{{
+                request.form.date }}">
+            </div> <br> 
+            <input type="text" placeholder="Budget" name="budget" value="{{
+                request.form.budget }}"> <br>
+            <input class="btn btn-default" type="submit"> 
+        </form>
+    </div>
+    <div class="col-8">
+        <h3>Your movies </h3>
+        {% for movie in movies %}
+            <strong>Title: </strong> {{ movie.title }} <br>
+            <strong>Genre: </strong> {{ movie.genre }}<br>
+            <strong>Release date: </strong> {{ movie.release_date }} <br>
+            <strong>Budget: </strong> {{ movie.budget }}<br>
+            <hr>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

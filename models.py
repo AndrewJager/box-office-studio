@@ -21,7 +21,7 @@ class Movie(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
-
+    studio = db.Column(db.String, nullable=False)
     genre = db.Column(db.String, nullable=False)
     status = db.Column(db.String, nullable=False)
     budget = db.Column(db.Integer, nullable=False)
@@ -35,8 +35,9 @@ class Movie(db.Model):
     release_date = db.Column(db.Date, nullable=True)
     production_date = db.Column(db.Date, nullable=True)
 
-    def __init__(self, title, genre, budget):
+    def __init__(self, title, studio, genre, budget):
         self.title = title
+        self.studio = studio
         self.genre = genre
         self.status = "Pre-production"
         self.budget = budget
@@ -49,3 +50,27 @@ class Movie(db.Model):
         self.china_gross = 0
         self.release_date = None
         self.production_date = "2019-3-1"
+
+
+class Studio(db.Model):
+    __tablename__ = "studio"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    user = db.Column(db.String, nullable=False)
+    cash = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, name, user, cash):
+        self.name = name
+        self.user = user
+        self.cash = cash
+        
+
+class BoxOffice(db.Model):
+    __tablename__ = "boxoffice"
+
+    id = db.Column(db.Integer, primary_key=True)
+    currentDate = db.Column(db.Date, nullable=False)
+
+    def __init__(self, curDate):
+        self.currentDate = curDate

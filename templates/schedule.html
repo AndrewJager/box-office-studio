@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Release schedule</h1>
+
+<div class="row">
+    {% for day in movies %}
+    <div class="col">
+        <h5>{{ system.currentDate + datetime.timedelta(days=((loop.index - 1) * 7)) }}</h5>
+        {% for movie in movies[loop.index0] %}
+            {{ movie.title }}<br>
+            {{ movie.studio }}<br>
+            {{ movie.budget }}<br>
+            <hr>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
