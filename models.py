@@ -1,4 +1,4 @@
-from app import def db 
+from app import db 
 
 class Announcement(db.Model):
 
