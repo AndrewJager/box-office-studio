@@ -7,6 +7,8 @@ app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 
 db = SQLAlchemy(app)
+
+
 from models import *
 
 def login_required(f):
@@ -22,8 +24,8 @@ def login_required(f):
 @app.route('/')
 @login_required
 def home():
-    news = []
-    return "hello world"
+    news = db.session.query(Announcement).all()
+    return render_template("index.html", news=news)
 
 @app.route('/welcome')
 def welcome():
