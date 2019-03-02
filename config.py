@@ -1,6 +1,5 @@
 import os
 
-
 class BaseConfig(object):
     DEBUG = False
     SECRET_KEY = '39qhfpq948hgqpcma;lkda;noivcnaoeruivbpe4ouvuqbp'
