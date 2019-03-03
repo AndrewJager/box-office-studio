@@ -34,21 +34,25 @@ def home():
 @app.route('/studio', methods={'GET', 'POST'})
 @login_required
 def studio():
+    error = None
     localSystem = BoxOffice.query.first()
     studio = Studio.query.filter_by(user='admin').first()
     if request.method == "POST":
         if 'title' in request.form:
             canAdd = Movie.query.filter_by(title=request.form['title']).first()
             if canAdd is None:
-                db.session.add(Movie(request.form['title'], "admin", request.form['genre'], request.form['budget']))
+                studio.cash = studio.cash - int(request.form['budget'])
+                db.session.add(Movie(request.form['title'], studio.name, request.form['genre'], request.form['budget']))
                 db.session.commit()
-            movies = Movie.query.filter_by(studio='admin').all()
-            return render_template("studio.html", system=localSystem, movies=movies, studio=studio, session=session)
+            else:
+                error="A movie with that title exists"
+            movies = Movie.query.filter_by(studio=studio.name).all()
+            return render_template("studio.html", system=localSystem, movies=movies, studio=studio, session=session, error=error)
         else:
             return redirect(url_for('home'))
             
     else:
-        movies = Movie.query.filter_by(studio='admin').all()
+        movies = Movie.query.filter_by(studio=studio.name).all()
         return render_template("studio.html", system=localSystem, movies=movies, studio=studio, session=session)
 
 @app.route('/schedule')
@@ -65,6 +69,7 @@ def schedule():
 @app.route('/movie/<string:id>', methods=['GET', 'POST'])
 def movie(id):
     movie = Film(Movie.query.filter_by(title=id).first())
+    studio = Studio.query.filter_by(user='admin').first()
     error=None
     if request.method == 'POST':
         if request.form['submit_button'] == 'Change date':
@@ -80,6 +85,7 @@ def movie(id):
             pass # do something else
         elif request.form['submit_button'] == 'Cancel movie':
             movie = movie.movie
+            studio.cash = studio.cash + (movie.budget - movie.budget_spent)
             db.session.delete(movie)
             db.session.commit()
             return redirect(url_for('studio'))

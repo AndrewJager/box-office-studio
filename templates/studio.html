@@ -13,7 +13,7 @@
                 request.form.title }}"> <br>
             <input type="text" placeholder="Fantasy" name="genre" value="{{
                 request.form.genre }}"> <br>  
-            <input type="number" placeholder="Budget" min=1 name="budget" value="{{
+            <input type="number" placeholder="Budget" min=1 max="{{ studio.cash }}" name="budget" value="{{
                 request.form.budget }}"> <br>
             <input class="btn btn-default" type="submit"> 
         </form>
