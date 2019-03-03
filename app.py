@@ -79,9 +79,10 @@ def movie(id):
         elif request.form['submit_button'] == 'Release trailer':
             pass # do something else
         elif request.form['submit_button'] == 'Cancel movie':
-            movie = Film.movie
+            movie = movie.movie
             db.session.delete(movie)
             db.session.commit()
+            return redirect(url_for('/studio'))
         return render_template("movie.html", movie=movie, error=error)
     else:
         return render_template("movie.html", movie=movie, error=error)
