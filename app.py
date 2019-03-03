@@ -82,7 +82,7 @@ def movie(id):
             movie = movie.movie
             db.session.delete(movie)
             db.session.commit()
-            return redirect(url_for('/studio'))
+            return redirect(url_for('studio'))
         return render_template("movie.html", movie=movie, error=error)
     else:
         return render_template("movie.html", movie=movie, error=error)
