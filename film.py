@@ -48,5 +48,7 @@ class Film():
             scale = 3
         elif genre == "War":
             scale = 6
+        elif genre == "Superhero":
+            scale = 8
         
         return scale
