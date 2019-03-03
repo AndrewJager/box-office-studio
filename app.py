@@ -4,6 +4,7 @@ from flask_sqlalchemy  import SQLAlchemy
 from functools import wraps
 import os
 import datetime
+from film import Film
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -38,7 +39,6 @@ def studio():
     if request.method == "POST":
         if 'title' in request.form:
             canAdd = Movie.query.filter_by(title=request.form['title']).first()
-            #weekday = datetime.datetime.strptime(request.form['release_date'], '%Y-%m-%d').weekday()
             if canAdd is None:
                 db.session.add(Movie(request.form['title'], "admin", request.form['genre'], request.form['budget']))
                 db.session.commit()
@@ -62,10 +62,25 @@ def schedule():
         
     return render_template("schedule.html", system=localSystem, movies=movies, datetime=datetime)
 
-@app.route('/movie/<string:id>')
+@app.route('/movie/<string:id>', methods=['GET', 'POST'])
 def movie(id):
-    movie = Movie.query.filter_by(title=id).first()
-    return render_template("movie.html", movie=movie)
+    movie = Film(Movie.query.filter_by(title=id).first())
+    error=None
+    if request.method == 'POST':
+        if request.form['submit_button'] == 'Change date':
+            date = request.form['release_date']
+            weekday = datetime.datetime.strptime(date, '%Y-%m-%d').weekday()
+            if weekday == 4:
+                movie.release_date = date
+                movie.update()
+                db.session.commit()
+            else:
+                error="Movie must be released on a friday"
+        elif request.form['submit_button'] == 'Do Something Else':
+            pass # do something else
+        return render_template("movie.html", movie=movie, error=error)
+    else:
+        return render_template("movie.html", movie=movie, error=error)
 
 @app.route('/welcome')
 def welcome():
