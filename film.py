@@ -20,7 +20,7 @@ class Film():
         self.production_date = movie.production_date
 
         #calculated fields
-        self.scale = ((self.budget * self.getGenreScale(self.genre)) + 1000) / 15
+        self.scale = round(((self.budget * self.getGenreScale(self.genre)) + 500) / 30)
         self.end_date = self.production_date + datetime.timedelta(days=self.scale)
 
 

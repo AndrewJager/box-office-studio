@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="row">
-    <div class="col-5 text-center">
-        <h2>{{ movie.title }}</h2>
+<div class="text-center">
+    <h2>{{ movie.title }}</h2>
+</div>
+<div class="row pt-3">
+    <div class="col-6 text-center">
+        <h3>Data</h3>
         <strong>Studio: </strong> {{ movie.studio }} <br>
         <strong>Genre: </strong> {{ movie.genre }} <br>
         <strong>Budget: </strong> {{ movie.budget }} <br>
@@ -12,18 +15,18 @@
         <strong>Began production: </strong> {{ movie.production_date }} <br>
         <strong>Scale: </strong> {{ movie.scale }} <br>
     </div>
-    <div class="col-2">
 
-    </div>
-    <div class="col-5 text-center">
-            <h2>Actions</h2>
+    <div class="col-6 text-center">
+            <h3>Actions</h3>
         <form method="post">
             <div class="form-group">
-                <label for="releaseDate">Release Date (Friday only)</label>
-                <input type="date" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
+                <label for="releaseDate">Change release date (Friday only)</label><br>
+                <input type="date" id="releaseDate" name="release_date" required="true" min="{{ movie.end_date }}" value="{{
                 request.form.date }}">
                 <input type="submit" name="submit_button" value="Change date">
             </div> <br> 
+        </form>
+        <form method="post">
             <input type="submit" name="submit_button" value="Release trailer">
         </form>
     </div>
