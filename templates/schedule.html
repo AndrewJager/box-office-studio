@@ -8,8 +8,9 @@
     <div class="col">
         <h5>{{ system.currentDate + datetime.timedelta(days=((loop.index - 1) * 7)) }}</h5>
         {% for movie in movies[loop.index0] %}
-            {{ movie.title }}<br>
+            <strong>{{ movie.title }}</strong><br>
             {{ movie.studio }}<br>
+            {{ movie.genre }} <br>
             {{ movie.budget }}<br>
             <hr>
         {% endfor %}

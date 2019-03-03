@@ -76,8 +76,12 @@ def movie(id):
                 db.session.commit()
             else:
                 error="Movie must be released on a friday"
-        elif request.form['submit_button'] == 'Do Something Else':
+        elif request.form['submit_button'] == 'Release trailer':
             pass # do something else
+        elif request.form['submit_button'] == 'Cancel movie':
+            movie = Film.movie
+            db.session.delete(movie)
+            db.session.commit()
         return render_template("movie.html", movie=movie, error=error)
     else:
         return render_template("movie.html", movie=movie, error=error)
