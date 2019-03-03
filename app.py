@@ -36,16 +36,20 @@ def studio():
     localSystem = BoxOffice.query.first()
     studio = Studio.query.filter_by(user='admin').first()
     if request.method == "POST":
-        canAdd = Movie.query.filter_by(title=request.form['title']).first()
-        weekday = datetime.datetime.strptime(request.form['release_date'], '%Y-%m-%d').weekday()
-        if canAdd is None and weekday == 4:
-            db.session.add(Movie(request.form['title'], "admin", request.form['genre'], request.form['budget']))
-            db.session.commit()
-        movies = Movie.query.filter_by(studio='admin').all()
-        return render_template("studio.html", system=localSystem, movies=movies, studio=studio)
+        if 'title' in request.form:
+            canAdd = Movie.query.filter_by(title=request.form['title']).first()
+            #weekday = datetime.datetime.strptime(request.form['release_date'], '%Y-%m-%d').weekday()
+            if canAdd is None:
+                db.session.add(Movie(request.form['title'], "admin", request.form['genre'], request.form['budget']))
+                db.session.commit()
+            movies = Movie.query.filter_by(studio='admin').all()
+            return render_template("studio.html", system=localSystem, movies=movies, studio=studio, session=session)
+        else:
+            return redirect(url_for('home'))
+            
     else:
         movies = Movie.query.filter_by(studio='admin').all()
-        return render_template("studio.html", system=localSystem, movies=movies, studio=studio)
+        return render_template("studio.html", system=localSystem, movies=movies, studio=studio, session=session)
 
 @app.route('/schedule')
 def schedule():
@@ -57,6 +61,11 @@ def schedule():
         i = i + 1
         
     return render_template("schedule.html", system=localSystem, movies=movies, datetime=datetime)
+
+@app.route('/movie/<string:id>')
+def movie(id):
+    movie = Movie.query.filter_by(title=id).first()
+    return render_template("movie.html", movie=movie)
 
 @app.route('/welcome')
 def welcome():
