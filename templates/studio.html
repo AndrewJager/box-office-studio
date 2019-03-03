@@ -18,10 +18,10 @@
             <input class="btn btn-default" type="submit"> 
         </form>
     </div>
-    <div class="col-8">
+    <div class="col-8 text-center">
         <h3>Your movies </h3>
         {% for movie in movies %}
-        <a href= "/movie/{{ movie.title }}">
+        <a class="btn btn-secondary btn-block" href= "/movie/{{ movie.title }}">
             <strong>Title: </strong> {{ movie.title }} <br>
             <strong>Genre: </strong> {{ movie.genre }}<br>
             <strong>Release date: </strong> {{ movie.release_date }} <br>

@@ -5,13 +5,16 @@
 
 <div class="row">
     {% for day in movies %}
-    <div class="col">
+    <div class="col vl">
         <h5>{{ system.currentDate + datetime.timedelta(days=((loop.index - 1) * 7)) }}</h5>
+        <hr>
         {% for movie in movies[loop.index0] %}
+            <a class="btn btn-secondary btn-block" href= "/movie/{{ movie.title }}">
             <strong>{{ movie.title }}</strong><br>
             {{ movie.studio }}<br>
             {{ movie.genre }} <br>
             {{ movie.budget }}<br>
+            </a>
             <hr>
         {% endfor %}
     </div>
