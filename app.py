@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, \
      request, session, flash
 from flask_sqlalchemy  import SQLAlchemy
+from flask_bcrypt import Bcrypt
 from functools import wraps
 import os
 import datetime
@@ -8,6 +9,7 @@ from film import Film
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
+bcrypt = Bcrypt(app)
 
 db = SQLAlchemy(app)
 from models import *
@@ -28,7 +30,7 @@ def login_required(f):
 @login_required
 def home():
     localSystem = BoxOffice.query.first()
-    news = db.session.query(Announcement).all()
+    news = db.session.query(User).all()
     return render_template("index.html", news=news)
 
 @app.route('/studio', methods={'GET', 'POST'})

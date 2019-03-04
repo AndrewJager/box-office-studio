@@ -1,4 +1,4 @@
-from app import db 
+from app import db, bcrypt 
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
@@ -74,3 +74,15 @@ class BoxOffice(db.Model):
 
     def __init__(self, curDate):
         self.currentDate = curDate
+
+
+class User(db.Model):
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    password = db.Column(db.String, nullable=False)
+
+    def __init__(self, name, password):
+        self.name = name
+        self.password = bcrypt.generate_password_hash(password)

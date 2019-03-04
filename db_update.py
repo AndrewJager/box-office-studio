@@ -3,8 +3,7 @@
 from app import db
 from models import *
 
-db.session.add(Studio("Starandsnow studios", "admin", 150))
-
-db.session.add(BoxOffice('2019-3-1'))
+db.session.add(User("Starandsnow", "C-plus-plus"))
+db.session.add(User("admin", "admin"))
 
 db.session.commit()
