@@ -14,6 +14,10 @@ bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 from models import *
 
+from project.users.views import users_blueprint
+
+app.register_blueprint(users_blueprint)
+
 localSystem = None
 
 def login_required(f):
@@ -23,7 +27,7 @@ def login_required(f):
             return f(*args, **kwargs)
         else:
             flash('You need to login first')
-            return redirect(url_for('login'))
+            return redirect(url_for('users.login'))
     return wrap
 
 @app.route('/')
@@ -71,7 +75,6 @@ def schedule():
     return render_template("schedule.html", system=localSystem, movies=movies, datetime=datetime, offset=0)
 
 @app.route('/schedule/<int:offset>')
-@app.route('/schedule/-<int:offset>')
 def schedules(offset):
     movies = {}
     localSystem = BoxOffice.query.first()
@@ -118,22 +121,6 @@ def welcome():
     localSystem = BoxOffice.query.first()
     return render_template("welcome.html")
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid login'
-        else:
-            session['logged_in'] = True
-            flash('Logged in')
-            return redirect(url_for('home'))
-    return render_template('login.html', error=error)
-
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    return redirect(url_for("welcome"))
 
 
 if __name__ == '__main__':
