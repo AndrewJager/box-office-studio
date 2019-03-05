@@ -17,24 +17,24 @@
         <hr>
         {% for movie in moviechanges %}
             {% if movie.created %}
-                <h5>Movie announced</h5>
-                <p><a href="/movie/{{ movie.movie }}">{{ movie.movie }}</a> has been announced</p>
-                <br>
+                <strong>Movie announced</strong>
+                <small><p><a href="/movie/{{ movie.movie }}">{{ movie.movie }}</a> has been announced</p></small>
+                <hr>
             {% else %}
-                <h5>Movie canceled</h5>
-                <p>{{ movie.movie }} has been canceled</p>
-                <br>
+                <strong>Movie canceled</strong>
+                <small><p>{{ movie.movie }} has been canceled</p></small>
+                <hr>
             {% endif %}
         {% endfor %}
         {% for date in dateChanges %}
             {% if date.oldDate != None %}
-                <h5>Release date change</h5>
-                <p><a href="/movie/{{ date.movie }}">{{ date.movie }}</a> moves to {{ date.newDate }} from {{ date.oldDate }}</p>
-                <br>
+                <strong>Release date change</strong>
+                <small><p><a href="/movie/{{ date.movie }}">{{ date.movie }}</a> moves to {{ date.newDate }} from {{ date.oldDate }}</p></small>
+                <hr>
             {% else %}
-                <h5>Movie scheduled</h5>
-                <p><a href="/movie/{{ date.movie }}">{{ date.movie }}</a> sets release date to {{ date.newDate }}</p>
-                <br>
+                <strong>Movie scheduled</strong>
+                <small><p><a href="/movie/{{ date.movie }}">{{ date.movie }}</a> sets release date to {{ date.newDate }}</p></small>
+                <hr>
             {% endif %}
         {% endfor %}
     </div>
