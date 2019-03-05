@@ -1,24 +1,17 @@
-from flask import Flask, render_template, redirect, url_for, \
-     request, session, flash
-from flask_sqlalchemy  import SQLAlchemy
+from flask import render_template, redirect, url_for, \
+     request, session, flash, Blueprint
 from flask_bcrypt import Bcrypt
 from functools import wraps
-import os
 import datetime
-from film import Film
+from project import app, db, localSystem
+from project.film import Film
+from project.models import *
 
-app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
-bcrypt = Bcrypt(app)
 
-db = SQLAlchemy(app)
-from models import *
-
-from project.users.views import users_blueprint
-
-app.register_blueprint(users_blueprint)
-
-localSystem = None
+home_blueprint = Blueprint(
+    'home', __name__,
+    template_folder = 'templates'
+)
 
 def login_required(f):
     @wraps(f)
@@ -30,7 +23,7 @@ def login_required(f):
             return redirect(url_for('users.login'))
     return wrap
 
-@app.route('/')
+@home_blueprint.route('/')
 def home():
     localSystem = BoxOffice.query.first()
     news = db.session.query(Announcement).all()
@@ -38,7 +31,7 @@ def home():
     dateChanges = db.session.query(DateChange).all()
     return render_template("index.html", news=news, moviechanges=changes, dateChanges=dateChanges)
 
-@app.route('/studio', methods={'GET', 'POST'})
+@home_blueprint.route('/studio', methods={'GET', 'POST'})
 @login_required
 def studio():
     error = None
@@ -63,7 +56,7 @@ def studio():
         movies = Movie.query.filter_by(studio=studio.name).all()
         return render_template("studio.html", system=localSystem, movies=movies, studio=studio, session=session)
 
-@app.route('/schedule')
+@home_blueprint.route('/schedule')
 def schedule():
     movies = {}
     localSystem = BoxOffice.query.first()
@@ -74,7 +67,7 @@ def schedule():
         
     return render_template("schedule.html", system=localSystem, movies=movies, datetime=datetime, offset=0)
 
-@app.route('/schedule/<int:offset>')
+@home_blueprint.route('/schedule/<int:offset>')
 def schedules(offset):
     movies = {}
     localSystem = BoxOffice.query.first()
@@ -85,7 +78,7 @@ def schedules(offset):
         
     return render_template("schedule.html", system=localSystem, movies=movies, datetime=datetime, offset=offset)
 
-@app.route('/movie/<string:id>', methods=['GET', 'POST'])
+@home_blueprint.route('/movie/<string:id>', methods=['GET', 'POST'])
 def movie(id):
     movie = Film(Movie.query.filter_by(title=id).first())
     studio = Studio.query.filter_by(user='admin').first()
@@ -116,12 +109,7 @@ def movie(id):
     else:
         return render_template("movie.html", movie=movie, error=error)
 
-@app.route('/welcome')
+@home_blueprint.route('/welcome')
 def welcome():
     localSystem = BoxOffice.query.first()
     return render_template("welcome.html")
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True)

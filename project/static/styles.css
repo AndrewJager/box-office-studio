@@ -3,3 +3,8 @@
     border-width: 2px;
     border-color: green;
 }
+
+.mainPageBox {
+    height: 150px;
+    overflow-y: scroll;
+  }
