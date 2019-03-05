@@ -1,12 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Welcome!</h1>
+<h1>Front Page Header</h1>
 <br>
+<div class="row vl text-center">
+    <div class="col">
+        <strong>News</strong>
+        <hr>
+        {% for post in news %}
+            <h5>{{ post.title }}</h5>
+            <p>{{ post.description }}</p>
+        {% endfor %}
+    </div>
+    <div class="col">
+        <strong>Changes</strong>
+        <hr>
+        {% for movie in moviechanges %}
+            {% if movie.created %}
+                <h5>Movie announced</h5>
+                <p><a href="/movie/{{ movie.movie }}">{{ movie.movie }}</a> has been announced</p>
+                <br>
+            {% else %}
+                <h5>Movie canceled</h5>
+                <p>{{ movie.movie }} has been canceled</p>
+                <br>
+            {% endif %}
+        {% endfor %}
+        {% for date in dateChanges %}
+            {% if date.oldDate != None %}
+                <h5>Release date change</h5>
+                <p><a href="/movie/{{ date.movie }}">{{ date.movie }}</a> moves to {{ date.newDate }} from {{ date.oldDate }}</p>
+                <br>
+            {% else %}
+                <h5>Movie scheduled</h5>
+                <p><a href="/movie/{{ date.movie }}">{{ date.movie }}</a> sets release date to {{ date.newDate }}</p>
+                <br>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="col">
+        <strong>Box office</strong>
+        <hr>
+    </div>
+</div>
 
-{% for post in news %}
-    <h5>{{ post.name }}: {{ post.password }}</h5>
-    <br>
-{% endfor %}
+
 
 {% endblock %}

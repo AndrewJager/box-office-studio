@@ -27,11 +27,12 @@ def login_required(f):
     return wrap
 
 @app.route('/')
-@login_required
 def home():
     localSystem = BoxOffice.query.first()
-    news = db.session.query(User).all()
-    return render_template("index.html", news=news)
+    news = db.session.query(Announcement).all()
+    changes = db.session.query(MovieChange).all()
+    dateChanges = db.session.query(DateChange).all()
+    return render_template("index.html", news=news, moviechanges=changes, dateChanges=dateChanges)
 
 @app.route('/studio', methods={'GET', 'POST'})
 @login_required
@@ -44,6 +45,7 @@ def studio():
             canAdd = Movie.query.filter_by(title=request.form['title']).first()
             if canAdd is None:
                 studio.cash = studio.cash - int(request.form['budget'])
+                db.session.add(MovieChange(request.form['title'], studio.name, localSystem.currentDate, True))
                 db.session.add(Movie(request.form['title'], studio.name, request.form['genre'], request.form['budget']))
                 db.session.commit()
             else:
@@ -84,12 +86,15 @@ def schedules(offset):
 def movie(id):
     movie = Film(Movie.query.filter_by(title=id).first())
     studio = Studio.query.filter_by(user='admin').first()
+    localSystem = BoxOffice.query.first()
     error=None
     if request.method == 'POST':
         if request.form['submit_button'] == 'Change date':
             date = request.form['release_date']
             weekday = datetime.datetime.strptime(date, '%Y-%m-%d').weekday()
             if weekday == 4:
+                db.session.add(DateChange(movie.title, studio.name, "2019-3-1", movie.release_date, date))
+                db.session.commit()
                 movie.release_date = date
                 movie.update()
                 db.session.commit()
@@ -100,6 +105,7 @@ def movie(id):
         elif request.form['submit_button'] == 'Cancel movie':
             movie = movie.movie
             studio.cash = studio.cash + (movie.budget - movie.budget_spent)
+            db.session.add(MovieChange(movie.title, studio.name, localSystem.currentDate, False))
             db.session.delete(movie)
             db.session.commit()
             return redirect(url_for('studio'))

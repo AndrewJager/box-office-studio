@@ -86,3 +86,37 @@ class User(db.Model):
     def __init__(self, name, password):
         self.name = name
         self.password = bcrypt.generate_password_hash(password)
+
+
+class DateChange(db.Model):
+    __tablename__ = "datechanges"
+    
+    id = db.Column(db.Integer, primary_key=True)
+    movie = db.Column(db.String, nullable=False)
+    studio = db.Column(db.String, nullable=False)
+    dateOfChange = db.Column(db.Date, nullable=False)
+    oldDate = db.Column(db.Date)
+    newDate = db.Column(db.Date, nullable=False)
+
+    def __init__(self, movie, studio, dateOfChange, oldDate, newDate):
+        self.movie = movie
+        self.studio = studio
+        self.dateOfChange = dateOfChange
+        self.oldDate = oldDate
+        self.newDate = newDate
+
+
+class MovieChange(db.Model):
+    __tablename__ = "moviechanges"
+
+    id = db.Column(db.Integer, primary_key=True)
+    movie = db.Column(db.String, nullable=False)
+    studio = db.Column(db.String, nullable=False)
+    dateOfChange = db.Column(db.Date, nullable=False)
+    created = db.Column(db.Boolean, nullable=False)
+
+    def __init__(self, movie, studio, dateOfChange, created):
+        self.movie = movie
+        self.studio = studio
+        self.dateOfChange = dateOfChange
+        self.created = created
