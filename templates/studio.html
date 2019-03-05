@@ -11,8 +11,18 @@
         <form method="post">
             <input type="text" placeholder="Big Fish" name="title" value="{{
                 request.form.title }}"> <br>
-            <input type="text" placeholder="Fantasy" name="genre" value="{{
-                request.form.genre }}"> <br>  
+            <div class="form-group">
+                    <label for="genreSelect">Genre</label>
+                    <select class="form-control" id="genreSelect" name="genre" value="{{ request.form.genre }}">
+                        <option>Fantasy</option>
+                        <option>Drama</option>
+                        <option>Sci-Fi</option>
+                        <option>Horror</option>
+                        <option>Comedy</option>
+                        <option>War</option>
+                        <option>Action</option>
+                    </select>
+                    </div> 
             <input type="number" placeholder="Budget" min=1 max="{{ studio.cash }}" name="budget" value="{{
                 request.form.budget }}"> <br>
             <input class="btn btn-default" type="submit"> 
