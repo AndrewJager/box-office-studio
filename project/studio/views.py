@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, url_for, redirect, request
 from project.models import *
-from flask_login import login_required, current_user, logged_in
+from flask_login import login_required, current_user
 
 studio_blueprint = Blueprint(
     'studio', __name__,
@@ -24,10 +24,10 @@ def studio():
             else:
                 error="A movie with that title exists"
             movies = Movie.query.filter_by(studio=studio.name).all()
-            return render_template("studio.html", user=current_user, logged_in=logged_in, system=localSystem, movies=movies, studio=studio, error=error)
+            return render_template("studio.html", user=current_user, system=localSystem, movies=movies, studio=studio, error=error)
         else:
             return redirect(url_for('home.home'))
             
     else:
         movies = Movie.query.filter_by(studio=studio.name).all()
-        return render_template("studio.html", user=current_user, logged_in=logged_in, system=localSystem, movies=movies, studio=studio)
+        return render_template("studio.html", user=current_user, system=localSystem, movies=movies, studio=studio)
