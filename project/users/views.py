@@ -1,6 +1,6 @@
 from flask import flash, redirect, render_template, request, \
    url_for, Blueprint
-from flask_login import login_user, login_required, logout_user, current_user
+from flask_login import login_user, login_required, logout_user, current_user, logged_in
 from project.users.form import LoginForm, RegisterForm
 from project.models import User, bcryptObj, Studio
 from project import db
@@ -25,7 +25,7 @@ def login():
                 return redirect(url_for('home.home'))
             else:
                 error = 'Invalid Credentials. Please try again.'
-    return render_template('login.html', user=current_user, form=form, error=error)
+    return render_template('login.html', user=current_user, logged_in=logged_in, form=form, error=error)
 
 
 @users_blueprint.route('/logout')
@@ -52,4 +52,4 @@ def register():
         db.session.commit()
         login_user(user)
         return redirect(url_for('home.home'))
-    return render_template('register.html', user=current_user, form=form)
+    return render_template('register.html', user=current_user, logged_in=logged_in, form=form)
