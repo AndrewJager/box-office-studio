@@ -1,6 +1,6 @@
 from flask import flash, redirect, render_template, request, \
    url_for, Blueprint
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from project.users.form import LoginForm, RegisterForm
 from project.models import User, bcryptObj, Studio
 from project import db
