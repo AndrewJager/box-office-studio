@@ -25,7 +25,7 @@ def login():
                 return redirect(url_for('home.home'))
             else:
                 error = 'Invalid Credentials. Please try again.'
-    return render_template('login.html', form=form, error=error)
+    return render_template('login.html', user=current_user, form=form, error=error)
 
 
 @users_blueprint.route('/logout')
@@ -52,4 +52,4 @@ def register():
         db.session.commit()
         login_user(user)
         return redirect(url_for('home.home'))
-    return render_template('register.html', form=form)
+    return render_template('register.html', user=current_user, form=form)
