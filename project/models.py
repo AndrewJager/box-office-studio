@@ -83,12 +83,27 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    studio = db.Column(db.String, nullable=False)
 
-    def __init__(self, name, password):
+    def __init__(self, name, email, studio, password):
         self.name = name
+        self.email = email
+        self.studio = studio
         pwhash = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
         self.password = pwhash.decode('utf8')
+        
+    def is_authenticated(self):
+        return True
 
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self.id)
 
 class DateChange(db.Model):
     __tablename__ = "datechanges"

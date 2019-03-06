@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, \
      request, session, flash, Blueprint
 from flask_bcrypt import Bcrypt
-from functools import wraps
+from flask_login import login_required
 import datetime
 from project import app, db, localSystem
 from project.film import Film
@@ -13,20 +13,10 @@ home_blueprint = Blueprint(
     template_folder = 'templates'
 )
 
-def login_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return f(*args, **kwargs)
-        else:
-            flash('You need to login first')
-            return redirect(url_for('users.login'))
-    return wrap
-
 @home_blueprint.route('/')
 def home():
     localSystem = BoxOffice.query.first()
-    news = db.session.query(User).all()
+    news = db.session.query(Announcement).all()
     changes = db.session.query(MovieChange).all()
     dateChanges = db.session.query(DateChange).all()
     return render_template("index.html", news=news, moviechanges=changes, dateChanges=dateChanges)
