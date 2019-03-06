@@ -36,7 +36,7 @@ def movie(id):
             db.session.add(MovieChange(movie.title, studio.name, localSystem.currentDate, False))
             db.session.delete(movie)
             db.session.commit()
-            return redirect(url_for('home.studio'))
+            return redirect(url_for('studio.studio'))
         return render_template("movie.html", movie=movie, error=error)
     else:
         return render_template("movie.html", movie=movie, error=error)
