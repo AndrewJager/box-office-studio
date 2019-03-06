@@ -32,5 +32,8 @@ login_manager.login_view = "users.login"
 
 @login_manager.user_loader
 def load_user(user_id):
-    user = User.query.filter(User.id == int(user_id)).first()
+    try:
+        user = User.query.filter(User.id == int(user_id)).first()
+    except:
+        user = None
     return user
