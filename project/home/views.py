@@ -18,8 +18,3 @@ def home():
     dateChanges = db.session.query(DateChange).all()
     return render_template("index.html", user=current_user, news=news, moviechanges=changes, dateChanges=dateChanges)
 
-
-@home_blueprint.route('/welcome')
-def welcome():
-    localSystem = BoxOffice.query.first()
-    return render_template("welcome.html")

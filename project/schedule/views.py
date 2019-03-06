@@ -1,4 +1,5 @@
 from flask import render_template, Blueprint
+from flask_login import current_user
 import datetime
 from project.models import *
 
@@ -17,7 +18,7 @@ def schedule():
         movies[i] = Movie.query.filter_by(release_date=(localSystem.currentDate + datetime.timedelta(days=i*7))).all()
         i = i + 1
         
-    return render_template("schedule.html", system=localSystem, movies=movies, datetime=datetime, offset=0)
+    return render_template("schedule.html", user=current_user, system=localSystem, movies=movies, datetime=datetime, offset=0)
 
 @schedule_blueprint.route('/schedule/<int:offset>')
 def schedules(offset):
@@ -28,4 +29,4 @@ def schedules(offset):
         movies[i] = Movie.query.filter_by(release_date=((localSystem.currentDate + datetime.timedelta(days=offset)) + datetime.timedelta(days=i*7))).all()
         i = i + 1
         
-    return render_template("schedule.html", system=localSystem, movies=movies, datetime=datetime, offset=offset)
+    return render_template("schedule.html", user=current_user, system=localSystem, movies=movies, datetime=datetime, offset=offset)

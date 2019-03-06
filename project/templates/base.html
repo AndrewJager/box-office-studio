@@ -23,7 +23,9 @@
                         <a class="nav-item nav-link" href="/schedule">Schedule</a>
                         <a class="nav-item nav-link" href="/studio">Studio</a>
                         {% if user.is_authenticated %}
-                        <a class="nav-item nav-link" href="/logout">Logout {{ user.name }}</a>
+                            <a class="nav-item nav-link" href="/logout">Logout</a>
+                        {% else %}
+                            <a class="nav-item nav-link" href="/login">Login</a>
                         {% endif %}
                         
                         </div>

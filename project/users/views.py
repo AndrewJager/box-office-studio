@@ -33,7 +33,7 @@ def login():
 def logout():
     logout_user()
     flash('You were logged out.')
-    return redirect(url_for('home.welcome'))
+    return redirect(url_for('home.home'))
 
 
 @users_blueprint.route('/register', methods=['GET', 'POST'])
