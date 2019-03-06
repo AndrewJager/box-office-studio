@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, \
      request, session, flash, Blueprint
 from flask_bcrypt import Bcrypt
-from flask_login import login_required
+from flask_login import login_required, current_user
 import datetime
 from project import app, db, localSystem
 from project.film import Film
@@ -26,7 +26,7 @@ def home():
 def studio():
     error = None
     localSystem = BoxOffice.query.first()
-    studio = Studio.query.filter_by(user='admin').first()
+    studio = Studio.query.filter_by(user=current_user.name).first()
     if request.method == "POST":
         if 'title' in request.form:
             canAdd = Movie.query.filter_by(title=request.form['title']).first()
@@ -71,7 +71,7 @@ def schedules(offset):
 @home_blueprint.route('/movie/<string:id>', methods=['GET', 'POST'])
 def movie(id):
     movie = Film(Movie.query.filter_by(title=id).first())
-    studio = Studio.query.filter_by(user='admin').first()
+    studio = Studio.query.filter_by(user=current_user.name).first()
     localSystem = BoxOffice.query.first()
     error=None
     if request.method == 'POST':
