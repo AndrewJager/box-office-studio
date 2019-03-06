@@ -23,7 +23,7 @@
                         <a class="nav-item nav-link" href="/schedule">Schedule</a>
                         <a class="nav-item nav-link" href="/studio">Studio</a>
                         {% if user.name != None %}
-                        <a class="nav-item nav-link" href="/logout">Logout</a>
+                        <a class="nav-item nav-link" href="/logout">Logout {{ user.name }}</a>
                         {% endif %}
                         
                         </div>
