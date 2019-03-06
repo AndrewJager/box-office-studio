@@ -3,7 +3,10 @@
 from project import db
 from project.models import *
 
-db.session.add(Studio("Starandsnow", "admin", 150))
-db.session.add(BoxOffice("2019-3-1"))
+db.session.query(User).delete()
+db.session.commit()
+
+db.session.add(User("Starandsnow", "C-plus-plus"))
+db.session.add(User("Batman", "password"))
 
 db.session.commit()

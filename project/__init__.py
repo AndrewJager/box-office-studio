@@ -6,7 +6,7 @@ import datetime
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
-bcrypt = Bcrypt(app)
+bcryptObj = Bcrypt(app)
 localSystem = None
 
 db = SQLAlchemy(app)

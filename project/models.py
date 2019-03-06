@@ -1,4 +1,5 @@
-from project import db, bcrypt 
+from project import db, bcryptObj
+import bcrypt
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
@@ -85,7 +86,8 @@ class User(db.Model):
 
     def __init__(self, name, password):
         self.name = name
-        self.password = bcrypt.generate_password_hash(password)
+        pwhash = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
+        self.password = pwhash.decode('utf8')
 
 
 class DateChange(db.Model):
