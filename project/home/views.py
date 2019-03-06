@@ -46,27 +46,6 @@ def studio():
         movies = Movie.query.filter_by(studio=studio.name).all()
         return render_template("studio.html", system=localSystem, movies=movies, studio=studio, session=session)
 
-@home_blueprint.route('/schedule')
-def schedule():
-    movies = {}
-    localSystem = BoxOffice.query.first()
-    i = 0
-    while i < 4:
-        movies[i] = Movie.query.filter_by(release_date=(localSystem.currentDate + datetime.timedelta(days=i*7))).all()
-        i = i + 1
-        
-    return render_template("schedule.html", system=localSystem, movies=movies, datetime=datetime, offset=0)
-
-@home_blueprint.route('/schedule/<int:offset>')
-def schedules(offset):
-    movies = {}
-    localSystem = BoxOffice.query.first()
-    i = 0
-    while i < 4:
-        movies[i] = Movie.query.filter_by(release_date=((localSystem.currentDate + datetime.timedelta(days=offset)) + datetime.timedelta(days=i*7))).all()
-        i = i + 1
-        
-    return render_template("schedule.html", system=localSystem, movies=movies, datetime=datetime, offset=offset)
 
 @home_blueprint.route('/movie/<string:id>', methods=['GET', 'POST'])
 def movie(id):
