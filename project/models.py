@@ -85,6 +85,7 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
     studio = db.Column(db.String, nullable=False)
+    isAdmin = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, name, email, studio, password):
         self.name = name
@@ -92,6 +93,7 @@ class User(db.Model):
         self.studio = studio
         pwhash = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
         self.password = pwhash.decode('utf8')
+        self.isAdmin = False
         
     def is_authenticated(self):
         return True
