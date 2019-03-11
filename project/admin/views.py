@@ -31,5 +31,15 @@ def admin():
             # create announcments
 
             db.session.commit()
+        elif request.form['submit_button'] == 'Reset':
+            BoxOffice.query.delete()
+            db.session.add(BoxOffice("2019-3-1"))
+            DateChange.query.delete()
+            Movie.query.delete()
+            MovieChange.query.delete()
+            for studio in session.query(Studio).all():
+                studio.cash = 150
+
+            db.session.commit()
 
     return render_template('admin.html', user=current_user, system=localSystem)
