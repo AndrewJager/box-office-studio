@@ -21,10 +21,30 @@ class Film():
 
         #calculated fields
         self.scale = round(((self.budget * self.getGenreScale(self.genre)) + 500) / 30)
-        self.end_date = self.production_date + datetime.timedelta(days=self.scale)
+        self.pre_production_end = self.production_date + datetime.timedelta(days=self.scale * 0.25)
+        self.filming_end = self.production_date + datetime.timedelta(days=self.scale * 0.75)
+        self.end_date = self.production_date + datetime.timedelta(days=self.scale) #date movie finishes filming
 
 
-    def update(self):
+    def update(self, currentDate):
+        if self.status == "Pre-production":
+            if currentDate > self.pre_production_end:
+                self.status = "Filming"
+            
+        if self.status == "Filming":
+            if currentDate > self.filming_end:
+                self.status = "Post-production"
+            
+        if self.status == "Post-production":
+            if currentDate > self.end_date:
+                self.status = "Finished"
+
+        if self.status == "Finished":
+            if self.release_date != None:
+                if currentDate > self.release_date:
+                    self.status = "Released"
+
+        # update db fields
         self.movie.status = self.status
         self.movie.budget = self.budget
         self.movie.budget_spent = self.budget_spent

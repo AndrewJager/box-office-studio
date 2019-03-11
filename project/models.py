@@ -36,7 +36,7 @@ class Movie(db.Model):
     release_date = db.Column(db.Date, nullable=True)
     production_date = db.Column(db.Date, nullable=True)
 
-    def __init__(self, title, studio, genre, budget):
+    def __init__(self, title, studio, genre, budget, curDate):
         self.title = title
         self.studio = studio
         self.genre = genre
@@ -50,7 +50,7 @@ class Movie(db.Model):
         self.int_gross = 0
         self.china_gross = 0
         self.release_date = None
-        self.production_date = "2019-3-1"
+        self.production_date = curDate
 
 
 class Studio(db.Model):

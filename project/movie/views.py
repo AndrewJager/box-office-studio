@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, redirect, url_for, request
 from project.models import *
 from project import db
 from project.film import Film
-from flask_login import current_user
+from flask_login import current_user, login_required
 import datetime
 
 movie_blueprint = Blueprint(
@@ -11,6 +11,7 @@ movie_blueprint = Blueprint(
 )
 
 @movie_blueprint.route('/movie/<string:id>', methods=['GET', 'POST'])
+@login_required
 def movie(id):
     movie = Film(Movie.query.filter_by(title=id).first())
     studio = Studio.query.filter_by(user=current_user.name).first()
@@ -19,12 +20,13 @@ def movie(id):
     if request.method == 'POST':
         if request.form['submit_button'] == 'Change date':
             date = request.form['release_date']
-            weekday = datetime.datetime.strptime(date, '%Y-%m-%d').weekday()
+            date = datetime.datetime.strptime(date, '%Y-%m-%d')
+            weekday = date.weekday()
             if weekday == 4:
-                db.session.add(DateChange(movie.title, studio.name, "2019-3-1", movie.release_date, date))
+                db.session.add(DateChange(movie.title, studio.name, localSystem.currentDate, movie.release_date, date))
                 db.session.commit()
                 movie.release_date = date
-                movie.update()
+                movie.update(localSystem.currentDate)
                 db.session.commit()
             else:
                 error="Movie must be released on a friday"
@@ -37,6 +39,5 @@ def movie(id):
             db.session.delete(movie)
             db.session.commit()
             return redirect(url_for('studio.studio'))
-        return render_template("movie.html", movie=movie, error=error)
-    else:
-        return render_template("movie.html", movie=movie, error=error)
+
+    return render_template("movie.html", user=current_user, movie=movie, error=error)

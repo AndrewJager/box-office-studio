@@ -19,7 +19,7 @@ def studio():
             if canAdd is None:
                 studio.cash = studio.cash - int(request.form['budget'])
                 db.session.add(MovieChange(request.form['title'], studio.name, localSystem.currentDate, True))
-                db.session.add(Movie(request.form['title'], studio.name, request.form['genre'], request.form['budget']))
+                db.session.add(Movie(request.form['title'], studio.name, request.form['genre'], request.form['budget'], localSystem.currentDate))
                 db.session.commit()
             else:
                 error="A movie with that title exists"
