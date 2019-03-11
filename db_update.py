@@ -3,8 +3,8 @@
 from project import db
 from project.models import *
 
-users = db.session.query(User).all()
-users.isAdmin = False
+users = db.session.query(User).first()
+users.isAdmin = True
 
 
 db.session.commit()
