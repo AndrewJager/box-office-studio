@@ -37,7 +37,7 @@ def admin():
             DateChange.query.delete()
             Movie.query.delete()
             MovieChange.query.delete()
-            for studio in session.query(Studio).all():
+            for studio in db.session.query(Studio).all():
                 studio.cash = 150
 
             db.session.commit()
