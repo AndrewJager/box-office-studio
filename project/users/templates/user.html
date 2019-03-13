@@ -5,10 +5,27 @@
 <div class="row">
   <div class="col text-center">
     <h1>{{ thisUser.name }}</h1>
+    <strong>Studio: </strong> {{ thisUser.studio }}
+
     {% if user.name == thisUser.name %}
-        <h2>can edit</h2>
+        <br>
+        <form method="post">
+            <input class="btn btn-secondary m-1" type="submit" name="submit_button" value="Change password"><br>
+            <input class="btn btn-danger m-1" type="submit" name="submit_button" value="Delete account">
+        </form>
     {% endif %}
-    <strong>Studio: </strong> {{ user.studio }}
+    {% if user.isAdmin %}
+        <form method="post">
+            <h5>Admin: </h5>
+            <input class="btn btn-danger" type="submit" name="submit_button" value="Delete user">
+        </form>
+    {% endif %}
+    {% if confirm == True %}
+        <h5>Are you sure you want to delete your account?</h5>
+        <form method="post">
+            <input class="btn btn-danger" type="submit" name="submit_button" value="Confirm">
+        </form>
+    {% endif %}
   </div>
 </div>
 

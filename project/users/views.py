@@ -42,7 +42,6 @@ def register():
     if form.validate_on_submit():
         user = User(
             name=form.username.data,
-            email=form.email.data,
             studio=form.username.data + " studios",
             password=form.password.data
         )
@@ -52,14 +51,36 @@ def register():
         return redirect(url_for('home.home'))
     return render_template('register.html', user=current_user, form=form)
 
-@users_blueprint.route('/user')
+@users_blueprint.route('/user', methods=['GET', 'POST'])
 def user():
     thisUser = current_user
+    confirm = False
+    if request.method == 'POST':
+        confirm = userPost(confirm, thisUser)
 
-    return render_template('user.html', user=current_user, thisUser=thisUser)
+    return render_template('user.html', user=current_user, thisUser=thisUser, confirm=confirm)
 
-@users_blueprint.route('/user/<string:id>')
+@users_blueprint.route('/user/<string:id>', methods=['GET', 'POST'])
 def specificUser(id):
     thisUser = User.query.filter_by(name=id).first()
+    confirm = False
+    if request.method == 'POST':
+        confirm = userPost(confirm, thisUser)
 
-    return render_template('user.html', user=current_user, thisUser=thisUser)
+    return render_template('user.html', user=current_user, thisUser=thisUser, confirm=confirm)
+
+def userPost(confirm, thisUser):
+    if request.form['submit_button'] == 'Change password':
+        pass
+
+    if request.form['submit_button'] == 'Delete account':
+        confirm = True
+
+    if request.form['submit_button'] == 'Delete user':
+        confirm = True
+
+    if request.form['submit_button'] == 'Confirm':
+        db.session.delete(thisUser)
+        db.session.commit()
+
+    return confirm

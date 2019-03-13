@@ -69,14 +69,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False)
     studio = db.Column(db.String, nullable=False)
     isAdmin = db.Column(db.Boolean, nullable=False)
     cash = db.Column(db.Integer)
 
-    def __init__(self, name, email, studio, password):
+    def __init__(self, name, studio, password):
         self.name = name
-        self.email = email
         self.studio = studio
         self.cash = 150
         pwhash = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
