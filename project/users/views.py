@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, request, \
    url_for, Blueprint
 from flask_login import login_user, login_required, logout_user, current_user
 from project.users.form import LoginForm, RegisterForm
-from project.models import User, bcryptObj, Studio
+from project.models import User, bcryptObj
 from project import db
 
 users_blueprint = Blueprint(
@@ -46,9 +46,7 @@ def register():
             studio=form.username.data + " studios",
             password=form.password.data
         )
-        studio = Studio(name=user.name + " studios", user=user.name, cash=150)
         db.session.add(user)
-        db.session.add(studio)
         db.session.commit()
         login_user(user)
         return redirect(url_for('home.home'))
@@ -57,13 +55,11 @@ def register():
 @users_blueprint.route('/user')
 def user():
     thisUser = current_user
-    studio = Studio.query.filter_by(user=thisUser.name).first()
 
-    return render_template('user.html', user=current_user, thisUser=thisUser, studio=studio)
+    return render_template('user.html', user=current_user, thisUser=thisUser)
 
 @users_blueprint.route('/user/<string:id>')
 def specificUser(id):
     thisUser = User.query.filter_by(name=id).first()
-    studio = Studio.query.filter_by(user=thisUser.name).first()
 
-    return render_template('user.html', user=current_user, thisUser=thisUser, studio=studio)
+    return render_template('user.html', user=current_user, thisUser=thisUser)

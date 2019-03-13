@@ -53,20 +53,6 @@ class Movie(db.Model):
         self.production_date = curDate
 
 
-class Studio(db.Model):
-    __tablename__ = "studio"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    user = db.Column(db.String, nullable=False)
-    cash = db.Column(db.Integer, nullable=False)
-
-    def __init__(self, name, user, cash):
-        self.name = name
-        self.user = user
-        self.cash = cash
-        
-
 class BoxOffice(db.Model):
     __tablename__ = "boxoffice"
 
