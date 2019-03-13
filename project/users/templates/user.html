@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ user.name }}</h1>
+<br>
+<div class="row">
+  <div class="col text-center">
+    <h1>{{ user.name }}</h1>
+    {% if user.name == thisUser.name %}
+        <h2>can edit</h2>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

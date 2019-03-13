@@ -19,6 +19,7 @@
         <strong>Scale: </strong> {{ movie.scale }} <br>
     </div>
 
+    {% if user.studio == movie.studio %}
     <div class="col-6 text-center">
             <h3>Actions</h3>
         <form method="post">
@@ -36,6 +37,7 @@
             <input type="submit" name="submit_button" value="Cancel movie">
         </form>
     </div>
+    {% endif %}
 </div>
 
 {% endblock %}

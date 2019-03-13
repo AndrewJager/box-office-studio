@@ -53,3 +53,15 @@ def register():
         login_user(user)
         return redirect(url_for('home.home'))
     return render_template('register.html', user=current_user, form=form)
+
+@users_blueprint.route('/user')
+def user():
+    thisUser = current_user
+
+    return render_template('user.html', user=current_user, thisUser=thisUser)
+
+@users_blueprint.route('/user/<string:name>')
+def specificUser(name):
+    thisUser = User.query.filter_by(name=name)
+
+    return render_template('user.html', user=current_user, thisUser=thisUser)

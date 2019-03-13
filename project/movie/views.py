@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, redirect, url_for, request
 from project.models import *
 from project import db
 from project.film import Film
-from flask_login import current_user, login_required
+from flask_login import current_user
 import datetime
 
 movie_blueprint = Blueprint(
@@ -11,13 +11,12 @@ movie_blueprint = Blueprint(
 )
 
 @movie_blueprint.route('/movie/<string:id>', methods=['GET', 'POST'])
-@login_required
 def movie(id):
     movie = Film(Movie.query.filter_by(title=id).first())
-    studio = Studio.query.filter_by(user=current_user.name).first()
     localSystem = BoxOffice.query.first()
     error=None
     if request.method == 'POST':
+        studio = Studio.query.filter_by(user=current_user.name).first()
         if request.form['submit_button'] == 'Change date':
             date = request.form['release_date']
             date = datetime.datetime.strptime(date, '%Y-%m-%d')
