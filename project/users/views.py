@@ -57,11 +57,13 @@ def register():
 @users_blueprint.route('/user')
 def user():
     thisUser = current_user
+    studio = Studio.query.filter_by(user=thisUser.name).first()
 
-    return render_template('user.html', user=current_user, thisUser=thisUser)
+    return render_template('user.html', user=current_user, thisUser=thisUser, studio=studio)
 
-@users_blueprint.route('/user/<string:name>')
-def specificUser(name):
-    thisUser = User.query.filter_by(name=name)
+@users_blueprint.route('/user/<string:id>')
+def specificUser(id):
+    thisUser = User.query.filter_by(name=id).first()
+    studio = Studio.query.filter_by(user=thisUser.name).first()
 
-    return render_template('user.html', user=current_user, thisUser=thisUser)
+    return render_template('user.html', user=current_user, thisUser=thisUser, studio=studio)

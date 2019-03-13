@@ -8,7 +8,7 @@
         <strong>News</strong>
         <hr>
         {% for post in news %}
-            <h5>{{ post.name }}</h5>
+            <a href="user/{{ post.name }}"> <h5>{{ post.name }}</h5> </a>
             <p>{{ post.description }}</p>
         {% endfor %}
     </div>

@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="text-center">
-    <h1>{{ studio.name }}</h1> <h2>Cash: {{ studio.cash }}</h2> <h2>{{ system.currentDate }}</h2>
+    <h1>{{ user.studio }}</h1> <h2>Cash: {{ user.cash}}</h2> <h2>{{ system.currentDate }}</h2>
 </div>
 <hr>
 <div class="row">
@@ -23,7 +23,7 @@
                         <option>Action</option>
                     </select>
                     </div> 
-            <input type="number" placeholder="Budget" min=1 max="{{ studio.cash }}" name="budget" value="{{
+            <input type="number" placeholder="Budget" min=1 max="{{ user.cash }}" name="budget" value="{{
                 request.form.budget }}"> <br>
             <input class="btn btn-default" type="submit"> 
         </form>
