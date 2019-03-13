@@ -15,14 +15,14 @@
         </form>
     {% endif %}
     {% if user.isAdmin %}
-        <form method="post">
+        <form method="post" class="mt-3">
             <h5>Admin: </h5>
             <input class="btn btn-danger" type="submit" name="submit_button" value="Delete user">
         </form>
     {% endif %}
     {% if confirm == True %}
-        <h5>Are you sure you want to delete your account?</h5>
-        <form method="post">
+        <form method="post" class="mt-3">
+            <h5>Are you sure you want to delete your account?</h5>
             <input class="btn btn-danger" type="submit" name="submit_button" value="Confirm">
         </form>
     {% endif %}
