@@ -8,13 +8,9 @@
 <div class="row">
     <div class="col-4">
         <h3>Add new movie</h3>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post">
             <input type="text" placeholder="Big Fish" name="title" value="{{
                 request.form.title }}">
-            <input type="file" name="file">
-            {% if upload_result %}
-                <img src="{{ poster['url'] }}" height="200px"/>
-            {% endif %}
             <div class="form-group input-sm">
                     <label for="genreSelect">Genre</label>
                     <select class="form-control" id="genreSelect" name="genre" value="{{ request.form.genre }}">

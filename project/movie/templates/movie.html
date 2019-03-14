@@ -7,6 +7,7 @@
 <div class="row pt-3">
     <div class="col-6 text-center">
         <h3>Data</h3>
+        <img src="{{ movie.poster }}"> <br>
         <strong>Studio: </strong> {{ movie.studio }} <br>
         <strong>Genre: </strong> {{ movie.genre }} <br>
         <strong>Budget: </strong> {{ movie.budget }} <br>
@@ -35,6 +36,10 @@
         </form>
         <form method="post">
             <input type="submit" name="submit_button" value="Cancel movie">
+        </form>
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="poster">
+            <input type="submit" name="submit_button" value="Change poster">
         </form>
     </div>
     {% endif %}

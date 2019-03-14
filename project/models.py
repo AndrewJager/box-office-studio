@@ -29,12 +29,12 @@ class Movie(db.Model):
     budget_spent = db.Column(db.Integer, nullable=False)
     advertising = db.Column(db.Integer, nullable=False)
     advertising_spent = db.Column(db.Integer, nullable=False)
-    poster = db.Column(db.String)
     dom_gross = db.Column(db.String, nullable=False)
     int_gross = db.Column(db.String, nullable=False)
     china_gross = db.Column(db.String, nullable=False)
     release_date = db.Column(db.Date, nullable=True)
     production_date = db.Column(db.Date, nullable=True)
+    poster = db.Column(db.String)
 
     def __init__(self, title, studio, genre, budget, curDate):
         self.title = title

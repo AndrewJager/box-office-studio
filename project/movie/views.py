@@ -4,6 +4,8 @@ from project import db
 from project.film import Film
 from flask_login import current_user
 import datetime
+from cloudinary.uploader import upload
+from cloudinary.utils import cloudinary_url
 
 movie_blueprint = Blueprint(
     'movie', __name__,
@@ -23,12 +25,21 @@ def movie(id):
             weekday = date.weekday()
             if weekday == 4:
                 db.session.add(DateChange(movie.title, user.studio, localSystem.currentDate, movie.release_date, date))
-                db.session.commit()
                 movie.release_date = date
-                movie.update(localSystem.currentDate)
+                movie.updateDB()
                 db.session.commit()
             else:
                 error="Movie must be released on a friday"
+        elif request.form['submit_button'] == 'Change poster':
+            file_to_upload = request.files['poster']
+            if file_to_upload:
+                poster = upload(file_to_upload, width=200, height=350, crop="limit")
+                movie.poster = poster['url']
+                movie.budget = 12
+                movie.updateDB()
+                db.session.merge(movie.movie)
+                db.session.commit()
+                
         elif request.form['submit_button'] == 'Release trailer':
             pass # do something else
         elif request.form['submit_button'] == 'Cancel movie':

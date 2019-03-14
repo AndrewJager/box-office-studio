@@ -18,6 +18,7 @@ class Film():
         self.china_gross = movie.china_gross
         self.release_date = movie.release_date
         self.production_date = movie.production_date
+        self.poster = movie.poster
 
         #calculated fields
         self.scale = round(((self.budget * self.getGenreScale(self.genre)) + 500) / 30)
@@ -45,6 +46,9 @@ class Film():
                     self.status = "Released"
 
         # update db fields
+        self.updateDB
+        
+    def updateDB(self):
         self.movie.status = self.status
         self.movie.budget = self.budget
         self.movie.budget_spent = self.budget_spent
@@ -54,6 +58,8 @@ class Film():
         self.movie.int_gross = self.int_gross
         self.movie.china_gross = self.china_gross
         self.movie.release_date = self.release_date
+        self.movie.poster = self.poster
+
 
     def getGenreScale(self, genre):
         if genre == "Sci-Fi":
