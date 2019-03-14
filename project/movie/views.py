@@ -35,7 +35,6 @@ def movie(id):
             if file_to_upload:
                 poster = upload(file_to_upload, width=200, height=350, crop="limit")
                 movie.poster = poster['url']
-                movie.budget = 12
                 movie.updateDB()
                 db.session.merge(movie.movie)
                 db.session.commit()
