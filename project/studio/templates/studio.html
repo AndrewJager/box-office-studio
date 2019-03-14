@@ -31,11 +31,18 @@
     <div class="col-8 text-center">
         <h3>Your movies </h3>
         {% for movie in movies %}
-        <a class="btn btn-secondary btn-block" href= "/movie/{{ movie.title }}">
-            <strong>Title: </strong> {{ movie.title }} <br>
-            <strong>Genre: </strong> {{ movie.genre }}<br>
-            <strong>Release date: </strong> {{ movie.release_date }} <br>
-            <strong>Budget: </strong> {{ movie.budget }}<br>
+            <a class="btn btn-secondary btn-block pl-5" href= "/movie/{{ movie.title }}">
+                <div class="row">
+                    <div class="col-2">
+                        <img src="{{ movie.poster }}" height="100px">
+                    </div>
+                    <div class="col-8">
+                        <strong>Title: </strong> {{ movie.title }} <br>
+                        <strong>Genre: </strong> {{ movie.genre }}<br>
+                        <strong>Release date: </strong> {{ movie.release_date }} <br>
+                        <strong>Budget: </strong> {{ movie.budget }}<br>
+                    </div>
+                </div>
             </a>
             <hr>
         {% endfor %}

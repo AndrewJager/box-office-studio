@@ -23,6 +23,7 @@
         {% for movie in movies[loop.index0] %}
             <a class="btn btn-secondary btn-block" href= "/movie/{{ movie.title }}">
             <strong>{{ movie.title }}</strong><br>
+            <img src="{{ movie.poster }}" height="80px"><br>
             {{ movie.studio }}<br>
             {{ movie.genre }} <br>
             {{ movie.budget }}<br>
