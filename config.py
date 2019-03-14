@@ -2,8 +2,9 @@ import os
 
 class BaseConfig(object):
     DEBUG = False
-    SECRET_KEY = '39qhfpq948hgqpcma;lkda;noivcnaoeruivbpe4ouvuqbp'
+    SECRET_KEY = os.environ['SECRET_KEY']
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    CLOUDINARY_URL = os.environ['CLOUDINARY_URL']
 
 
 class DevelopmentConfig(BaseConfig):

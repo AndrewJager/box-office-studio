@@ -6,6 +6,7 @@ import os
 import datetime
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 login_manager = LoginManager()
 login_manager.init_app(app)
 app.config.from_object(os.environ['APP_SETTINGS'])
