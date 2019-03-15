@@ -30,3 +30,8 @@ def schedules(offset):
         i = i + 1
         
     return render_template("schedule.html", user=current_user, system=localSystem, movies=movies, datetime=datetime, offset=offset)
+
+@schedule_blueprint.route('/boxoffice')
+def boxoffice():
+    localSystem = BoxOffice.query.first()
+    return render_template("boxoffice.html", user=current_user, system=localSystem)

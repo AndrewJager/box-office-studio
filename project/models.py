@@ -58,6 +58,14 @@ class BoxOffice(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     currentDate = db.Column(db.Date, nullable=False)
+    scifi_demand = db.Column(db.Integer)
+    fantasy_demand = db.Column(db.Integer)
+    drama_demand = db.Column(db.Integer)
+    horror_demand = db.Column(db.Integer)
+    comedy_demand = db.Column(db.Integer)
+    war_demand = db.Column(db.Integer)
+    superhero_demand = db.Column(db.Integer)
+    action_demand = db.Column(db.Integer)
 
     def __init__(self, curDate):
         self.currentDate = curDate
