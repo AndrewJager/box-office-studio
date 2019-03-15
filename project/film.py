@@ -1,5 +1,6 @@
 # movie = database object, film = runtime object
 import datetime
+import constants
 
 class Film():
     def __init__(self, movie):
@@ -22,8 +23,8 @@ class Film():
 
         #calculated fields
         self.scale = round(((self.budget * self.getGenreScale(self.genre)) + 500) / 30)
-        self.pre_production_end = self.production_date + datetime.timedelta(days=self.scale * 0.25)
-        self.filming_end = self.production_date + datetime.timedelta(days=self.scale * 0.75)
+        self.pre_production_end = self.production_date + datetime.timedelta(days=self.scale * constants.PRE_PRODUCTION_LENGTH)
+        self.filming_end = self.production_date + datetime.timedelta(days=self.scale * constants.FILMING_LENGTH)
         self.end_date = self.production_date + datetime.timedelta(days=self.scale) #date movie finishes filming
 
 
