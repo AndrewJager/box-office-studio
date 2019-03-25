@@ -26,9 +26,21 @@
         <form method="post">
             <div class="form-group">
                 <label for="releaseDate">Change release date (Friday only)</label><br>
-                <input type="date" id="releaseDate" name="release_date" required="true" min="{{ movie.end_date }}" value="{{
+                <input type="date" width="20 vw" id="releaseDate" name="release_date" required="true" min="{{ movie.end_date }}" value="{{
                 request.form.date }}">
                 <input type="submit" name="submit_button" value="Change date">
+            </div>
+            <div class="form-group">
+                <label for="releaseDate">Change international release date (Friday only)(3M)</label><br>
+                <input type="date" id="releaseDate" name="release_date" required="true" min="{{ movie.end_date }}" value="{{
+                request.form.date }}">
+                <input type="submit" name="submit_button" value="Change int date">
+            </div>
+            <div class="form-group">
+                <label for="releaseDate">Change China release date (Friday only)(5M)</label><br>
+                <input type="date" id="releaseDate" name="release_date" required="true" min="{{ movie.end_date }}" value="{{
+                request.form.date }}">
+                <input type="submit" name="submit_button" value="Change china date">
             </div> <br> 
         </form>
         <form method="post">

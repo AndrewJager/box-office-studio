@@ -79,7 +79,7 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     studio = db.Column(db.String, nullable=False)
     isAdmin = db.Column(db.Boolean, nullable=False)
-    cash = db.Column(db.Integer)
+    cash = db.Column(db.Float)
 
     def __init__(self, name, studio, password):
         self.name = name
