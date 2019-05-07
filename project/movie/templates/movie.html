@@ -7,17 +7,19 @@
 <div class="row pt-3">
     <div class="col-6 text-center">
         <h3>Data</h3>
+        <table class="table">
         <img src="{{ movie.poster }}"> <br>
-        <strong>Studio: </strong> {{ movie.studio }} <br>
-        <strong>Genre: </strong> {{ movie.genre }} <br>
-        <strong>Budget: </strong> {{ movie.budget }} <br>
-        <strong>Status: </strong> {{ movie.status }} <br>
-        <strong>Release date: </strong> {{ movie.release_date }} <br>
-        <strong>Began production: </strong> {{ movie.production_date }} <br>
-        <strong>End pre-production: </strong> {{ movie.pre_production_end }} <br>
-        <strong>End filming: </strong> {{ movie.filming_end}} <br>
-        <strong>End post-production: </strong> {{ movie.end_date }} <br>
-        <strong>Scale: </strong> {{ movie.scale }} <br>
+        <tr><td><strong>Studio: </strong></td> <td>{{ movie.studio }} </td></tr>
+        <tr><td><strong>Genre: </strong></td> <td>{{ movie.genre }} </td></tr>
+        <tr><td><strong>Budget: </strong></td><td>{{ movie.budget }} </td> </tr>
+        <tr><td><strong>Status: </strong></td> <td>{{ movie.status }} </td></tr>
+        <tr><td><strong>Release date: </strong></td> <td>{{ movie.release_date }} </td></tr>
+        <tr><td><strong>Began production: </strong></td> <td>{{ movie.production_date }}</td> </tr>
+        <tr><td><strong>End pre-production: </strong></td> <td>{{ movie.pre_production_end }} </td></tr>
+        <tr><td><strong>End filming: </strong></td> <td>{{ movie.filming_end}} </td></tr>
+        <tr><td><strong>End post-production: </strong></td> <td>{{ movie.end_date }} </td></tr>
+        <tr><td><strong>Scale: </strong></td> <td>{{ movie.scale }} </td></tr>
+        </table>
     </div>
 
     {% if user.studio == movie.studio %}
@@ -26,19 +28,19 @@
         <form method="post">
             <div class="form-group">
                 <label for="releaseDate">Change release date (Friday only)</label><br>
-                <input type="date" width="20 vw" id="releaseDate" name="release_date" required="true" min="{{ movie.end_date }}" value="{{
+                <input type="date" width="20 vw" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
                 request.form.date }}">
                 <input type="submit" name="submit_button" value="Change date">
             </div>
             <div class="form-group">
                 <label for="releaseDate">Change international release date (Friday only)(3M)</label><br>
-                <input type="date" id="releaseDate" name="release_date" required="true" min="{{ movie.end_date }}" value="{{
+                <input type="date" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
                 request.form.date }}">
                 <input type="submit" name="submit_button" value="Change int date">
             </div>
             <div class="form-group">
                 <label for="releaseDate">Change China release date (Friday only)(5M)</label><br>
-                <input type="date" id="releaseDate" name="release_date" required="true" min="{{ movie.end_date }}" value="{{
+                <input type="date" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
                 request.form.date }}">
                 <input type="submit" name="submit_button" value="Change china date">
             </div> <br> 
