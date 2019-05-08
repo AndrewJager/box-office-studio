@@ -16,5 +16,5 @@ def home():
     news = db.session.query(User).all()
     changes = db.session.query(MovieChange).all()
     dateChanges = db.session.query(DateChange).all()
-    return render_template("index.html", user=current_user, news=news, moviechanges=changes, dateChanges=dateChanges)
+    return render_template("index.html", user=current_user, news=news, moviechanges=changes, dateChanges=dateChanges, system=localSystem)
 

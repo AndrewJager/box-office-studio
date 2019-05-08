@@ -23,6 +23,7 @@
                         <a class="nav-item nav-link" href="/boxoffice">Box office</a>
                         <a class="nav-item nav-link" href="/schedule">Schedule</a>
                         <a class="nav-item nav-link pr-5" href="/studio">Studio</a>
+                        <p class="menuDate"><small>{{ system.currentDate }}</small></p>
                         <ul class="navbar-nav">
                         {% if user.is_authenticated %}
                             <li class="nav-item pl-5"><a class="nav-item nav-link" href="/user">{{ user.name }}</a></li>

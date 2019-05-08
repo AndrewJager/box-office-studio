@@ -49,4 +49,4 @@ def movie(id):
             db.session.commit()
             return redirect(url_for('studio.studio'))
 
-    return render_template("movie.html", user=current_user, movie=movie, error=error)
+    return render_template("movie.html", user=current_user, movie=movie, error=error, system=localSystem)
