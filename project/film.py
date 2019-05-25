@@ -46,6 +46,9 @@ class Film():
                 if currentDate > self.release_date:
                     self.status = "Released"
 
+        if self.status == "Released":
+            pass     
+
         # update db fields
         self.updateDB
         
