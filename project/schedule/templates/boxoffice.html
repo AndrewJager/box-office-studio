@@ -1,9 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% for result in results %}
 <div class="row">
     <div class="col">
-        {{ system.fantasy_demand }}
+        {{ result.movie }}
+    </div>
+    <div class="col">
+        {{ result.movie_gross }}
     </div>
 </div>
+{% endfor %}
+
 {% endblock %}

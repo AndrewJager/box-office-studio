@@ -26,6 +26,7 @@ class Film():
         self.pre_production_end = self.production_date + datetime.timedelta(days=self.scale * constants.PRE_PRODUCTION_LENGTH)
         self.filming_end = self.production_date + datetime.timedelta(days=self.scale * constants.FILMING_LENGTH)
         self.end_date = self.production_date + datetime.timedelta(days=self.scale) #date movie finishes filming
+        self.cur_gross = 0 #default
 
 
     def update(self, currentDate):
@@ -47,7 +48,11 @@ class Film():
                     self.status = "Released"
 
         if self.status == "Released":
-            pass     
+            hype = 10 #temp
+            weeks = 1
+            self.cur_gross = (hype * self.scale) / weeks
+            self.dom_gross += self.cur_gross
+
 
         # update db fields
         self.updateDB

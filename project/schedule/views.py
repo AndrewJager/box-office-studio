@@ -34,4 +34,5 @@ def schedules(offset):
 @schedule_blueprint.route('/boxoffice')
 def boxoffice():
     localSystem = BoxOffice.query.first()
-    return render_template("boxoffice.html", user=current_user, system=localSystem)
+    results = Results.query.all()
+    return render_template("boxoffice.html", user=current_user, system=localSystem, results=results)

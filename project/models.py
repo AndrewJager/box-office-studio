@@ -29,9 +29,9 @@ class Movie(db.Model):
     budget_spent = db.Column(db.Integer, nullable=False)
     advertising = db.Column(db.Integer, nullable=False)
     advertising_spent = db.Column(db.Integer, nullable=False)
-    dom_gross = db.Column(db.String, nullable=False)
-    int_gross = db.Column(db.String, nullable=False)
-    china_gross = db.Column(db.String, nullable=False)
+    dom_gross = db.Column(db.Integer)
+    int_gross = db.Column(db.Integer)
+    china_gross = db.Column(db.Integer)
     release_date = db.Column(db.Date, nullable=True)
     production_date = db.Column(db.Date, nullable=True)
     poster = db.Column(db.String)
@@ -142,3 +142,8 @@ class Results(db.Model):
     date = db.Column(db.Date, nullable=False)
     movie = db.Column(db.String)
     movie_gross = db.Column(db.Float)
+
+    def __init__(self, date, movie, gross):
+        self.date = date
+        self.movie = movie
+        self.movie_gross = gross

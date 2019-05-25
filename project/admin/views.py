@@ -16,8 +16,6 @@ def admin():
     if request.method == 'POST':
         if request.form['submit_button'] == 'Next week':
             
-            # calc box office for current date
-            # store box office
             # change date - done
             nextDay = localSystem.currentDate + datetime.timedelta(days=7)
             localSystem.currentDate = nextDay
@@ -28,6 +26,11 @@ def admin():
             for movie in movies:
                 film = Film(movie)
                 film.update(localSystem.currentDate)
+                gross = film.cur_gross
+                if gross > 0:
+                    result = Results(localSystem.currentDate, film.title, gross)
+                    db.session.add(result)
+
             # create announcments
 
             db.session.commit()
@@ -37,6 +40,7 @@ def admin():
             DateChange.query.delete()
             Movie.query.delete()
             MovieChange.query.delete()
+            Results.query.delete()
             for user in db.session.query(User).all():
                 user.cash = 150
 
