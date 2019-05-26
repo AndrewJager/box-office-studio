@@ -19,6 +19,11 @@
         <tr><td><strong>End filming: </strong></td> <td>{{ movie.filming_end}} </td></tr>
         <tr><td><strong>End post-production: </strong></td> <td>{{ movie.end_date }} </td></tr>
         <tr><td><strong>Scale: </strong></td> <td>{{ movie.scale }} </td></tr>
+        {% if movie.status == "Released" %}
+        <tr><td><strong>Domestic gross: </strong></td> <td>{{ movie.dom_gross }} </td></tr>  
+        <tr><td><strong>China gross: </strong></td> <td>{{ movie.china_gross }} </td></tr> 
+        <tr><td><strong>Worldwide gross: </strong></td> <td>{{ movie.int_gross }} </td></tr>   
+        {% endif %}
         </table>
     </div>
 

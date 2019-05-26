@@ -14,6 +14,7 @@ movie_blueprint = Blueprint(
 @movie_blueprint.route('/movie/<string:id>', methods=['GET', 'POST'])
 def movie(id):
     movie = Movie.query.filter_by(title=id).first()
+    movie.calcFields()
     localSystem = BoxOffice.query.first()
     user = current_user
     error=None
@@ -25,7 +26,6 @@ def movie(id):
             if weekday == 4:
                 db.session.add(DateChange(movie.title, user.studio, localSystem.currentDate, movie.release_date, date))
                 movie.release_date = date
-                movie.updateDB()
                 db.session.commit()
             else:
                 error="Movie must be released on a friday"
@@ -34,8 +34,7 @@ def movie(id):
             if file_to_upload:
                 poster = upload(file_to_upload, width=200, height=350, crop="limit")
                 movie.poster = poster['url']
-                movie.updateDB()
-                db.session.merge(movie.movie)
+                db.session.merge(movie)
                 db.session.commit()
                 
         elif request.form['submit_button'] == 'Release trailer':
