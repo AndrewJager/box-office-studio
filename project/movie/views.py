@@ -1,7 +1,6 @@
 from flask import render_template, Blueprint, redirect, url_for, request
 from project.models import *
 from project import db
-from project.film import Film
 from flask_login import current_user
 import datetime
 from cloudinary.uploader import upload
@@ -14,7 +13,7 @@ movie_blueprint = Blueprint(
 
 @movie_blueprint.route('/movie/<string:id>', methods=['GET', 'POST'])
 def movie(id):
-    movie = Film(Movie.query.filter_by(title=id).first())
+    movie = Movie.query.filter_by(title=id).first()
     localSystem = BoxOffice.query.first()
     user = current_user
     error=None

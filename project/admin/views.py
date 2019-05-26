@@ -3,7 +3,6 @@ from project.models import *
 from project import db
 from flask_login import current_user
 import datetime
-from project.film import Film
 
 admin_blueprint = Blueprint(
     'admin', __name__,
@@ -24,11 +23,10 @@ def admin():
             # update movies
             movies = db.session.query(Movie).all()
             for movie in movies:
-                film = Film(movie)
-                film.update(localSystem.currentDate)
-                gross = film.cur_gross
+                movie.update(localSystem.currentDate)
+                gross = movie.cur_gross
                 if gross > 0:
-                    result = Results(localSystem.currentDate, film.title, gross)
+                    result = Results(localSystem.currentDate, movie.title, gross)
                     db.session.add(result)
 
             # create announcments

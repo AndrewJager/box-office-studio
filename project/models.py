@@ -1,5 +1,7 @@
 from project import db, bcryptObj
 import bcrypt
+import datetime
+import constants
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
@@ -51,6 +53,59 @@ class Movie(db.Model):
         self.china_gross = 0
         self.release_date = None
         self.production_date = curDate
+
+    def calcFields(self):
+        #calculated fields
+        self.scale = round(((self.budget * self.getGenreScale(self.genre)) + 500) / 30)
+        self.pre_production_end = self.production_date + datetime.timedelta(days=self.scale * constants.PRE_PRODUCTION_LENGTH)
+        self.filming_end = self.production_date + datetime.timedelta(days=self.scale * constants.FILMING_LENGTH)
+        self.end_date = self.production_date + datetime.timedelta(days=self.scale) #date movie finishes filming
+        self.cur_gross = 0 #default
+
+    def update(self, currentDate):
+        self.calcFields()
+        if self.status == "Pre-production":
+            if currentDate > self.pre_production_end:
+                self.status = "Filming"
+            
+        if self.status == "Filming":
+            if currentDate > self.filming_end:
+                self.status = "Post-production"
+            
+        if self.status == "Post-production":
+            if currentDate > self.end_date:
+                self.status = "Finished"
+
+        if self.status == "Finished":
+            if self.release_date != None:
+                if currentDate > self.release_date:
+                    self.status = "Released"
+
+        if self.status == "Released":
+            hype = 10 #temp
+            weeks = 1
+            self.cur_gross = (hype * self.scale) / weeks
+            self.dom_gross += self.cur_gross
+
+    def getGenreScale(self, genre):
+        if genre == "Sci-Fi":
+            scale = 10
+        elif genre == "Fantasy":
+            scale = 8
+        elif genre == "Drama":
+            scale = 2
+        elif genre == "Horror":
+            scale = 4
+        elif genre == "Comedy":
+            scale = 3
+        elif genre == "War":
+            scale = 6
+        elif genre == "Superhero":
+            scale = 8
+        elif genre == "Action":
+            scale = 6
+
+        return scale
 
 
 class BoxOffice(db.Model):
