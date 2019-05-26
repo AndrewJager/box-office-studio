@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 
+<div class="row pt-3">
+    <div class="col-2">
+        <a class="btn btn-secondary btn-block" href= "/boxoffice/{{ offset - 7 }}">Previous</a>
+    </div>
+    <div class="col-8 text-center">
+        <h1>Release schedule</h1>
+    </div>
+    <div class="col-2">
+        <a class="btn btn-secondary btn-block" href= "/boxoffice/{{ offset + 7 }}">Next</a>
+    </div>
+</div>
+
 {% for result in results %}
 <div class="row">
     <div class="col">
@@ -8,6 +20,9 @@
     </div>
     <div class="col">
         {{ result.movie_gross }}
+    </div>
+    <div class="col">
+        {{ result.date }}
     </div>
 </div>
 {% endfor %}
