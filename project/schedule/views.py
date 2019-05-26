@@ -37,9 +37,9 @@ def boxoffice():
     results = Results.query.filter_by(date=localSystem.currentDate - datetime.timedelta(days=7)).all()
     return render_template("boxoffice.html", user=current_user, system=localSystem, results=results, offset=0)
 
-@schedule_blueprint.route('/boxoffice/<int:offset>')
+@schedule_blueprint.route('/boxoffice/<string:offset>')
 def boxoffices(offset):
     localSystem = BoxOffice.query.first()
-    date = (localSystem.currentDate + datetime.timedelta(days=offset)) - datetime.timedelta(days=7)
+    date = (localSystem.currentDate + datetime.timedelta(days=int(offset))) - datetime.timedelta(days=7)
     results = Results.query.filter_by(date=date).all()
-    return render_template("boxoffice.html", user=current_user, system=localSystem, results=results, offset=offset)
+    return render_template("boxoffice.html", user=current_user, system=localSystem, results=results, offset=int(offset))
