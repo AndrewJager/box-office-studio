@@ -1,4 +1,38 @@
 {% extends "base.html" %}
+{% block head %}
+<style>
+.event a {
+  background-color: #42B373 !important;
+  background-image :none !important;
+  color: #ffffff !important;
+}
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        
+        var eventDates = {};
+        eventDates[ new Date( '6/20/2019' )] = new Date( '6/20/2019' ).toString();
+        eventDates[ new Date( '6/25/2019' )] = new Date( '6/25/2019' ).toString();
+
+        jQuery('#calendar').datepicker({
+            beforeShowDay: function( date ) {
+                var highlight = eventDates[date];
+                if( highlight ) {
+                     return [true, "event", highlight];
+                } else {
+                     return [true, '', ''];
+                }
+             },
+             changeYear: true,
+             numberOfMonths: 3,
+             showOtherMonths: true,
+        });
+        $( "#calender" ).datepicker( "setDate", "10/12/2012" );
+    });
+</script>
+{% endblock %}
+
+
 {% block content %}
 
 <div class="row pt-3">
@@ -26,5 +60,7 @@
     </div>
 </div>
 {% endfor %}
+
+<p>Date: <input type="text" id="calendar"></p>
 
 {% endblock %}
