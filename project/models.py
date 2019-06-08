@@ -58,13 +58,13 @@ class Movie(db.Model):
         return round(((self.budget * self.getGenreScale(self.genre)) + 500) / 30)
 
     def getPreProEnd(self):
-        return self.production_date + datetime.timedelta(days=self.scale * constants.PRE_PRODUCTION_LENGTH)
+        return self.production_date + datetime.timedelta(days=self.getScale() * constants.PRE_PRODUCTION_LENGTH)
 
     def getFilmingEnd(self):
-        return self.production_date + datetime.timedelta(days=self.scale * constants.FILMING_LENGTH)
+        return self.production_date + datetime.timedelta(days=self.getScale() * constants.FILMING_LENGTH)
 
     def getProductionEnd(self):
-        return self.production_date + datetime.timedelta(days=self.scale)
+        return self.production_date + datetime.timedelta(days=self.getScale())
 
     def update(self, currentDate):
         if self.status == "Pre-production":

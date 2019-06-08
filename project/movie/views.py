@@ -16,18 +16,22 @@ def movie(id):
     movie = Movie.query.filter_by(title=id).first()
     localSystem = BoxOffice.query.first()
     user = current_user
-    error=None
+    allMovies = Movie.query.all()
+    dates = []
+    for film in allMovies:
+        if film.release_date != None:
+            date = film.release_date
+            dates.append(date.strftime('%m/%d/%y'))
+    localSystem.dates = dates
+
     if request.method == 'POST':
         if request.form['submit_button'] == 'Change date':
             date = request.form['release_date']
-            date = datetime.datetime.strptime(date, '%Y-%m-%d')
-            weekday = date.weekday()
-            if weekday == 4:
+            if date != None:
+                date = datetime.datetime.strptime(date, '%Y-%m-%d')
                 db.session.add(DateChange(movie.title, user.studio, localSystem.currentDate, movie.release_date, date))
                 movie.release_date = date
                 db.session.commit()
-            else:
-                error="Movie must be released on a friday"
         elif request.form['submit_button'] == 'Change poster':
             file_to_upload = request.files['poster']
             if file_to_upload:
@@ -46,4 +50,4 @@ def movie(id):
             db.session.commit()
             return redirect(url_for('studio.studio'))
 
-    return render_template("movie.html", user=current_user, movie=movie, error=error, system=localSystem)
+    return render_template("movie.html", user=current_user, movie=movie, system=localSystem)

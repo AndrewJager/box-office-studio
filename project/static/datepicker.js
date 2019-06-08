@@ -6,10 +6,9 @@ function runDatepicker(curDate, dates){
         for (i = 0; i <= 100; i++)
         {
             var year = '20' + i.toString().padStart(2, '0');
-            holidays[ new Date( '6/20/' + year )] = new Date( '6/20/' + year).toString(); 
+            holidays[ new Date( '6/21/' + year )] = new Date( '6/20/' + year).toString(); 
             holidays[ new Date( '6/25/' + year )] = new Date( '6/25/' + year).toString();   
         }
-       console.log(holidays);
         let datesArray = dates.replace('[','').replace(']','').split(",").map(String);
         var movieDates = {}
         for (i = 0; i < datesArray.length; i++)
@@ -17,16 +16,19 @@ function runDatepicker(curDate, dates){
             datesArray[i] = datesArray[i].trim()
             movieDates[ new Date( datesArray[i])] = new Date ( datesArray[i] ).toString();
         }
-        console.log(movieDates);
         jQuery('#calendar').datepicker({
             beforeShowDay: function( date ) {
-                var highlight = holidays[date];
+                var holidayHighlight = holidays[date];
                 var movieHightlight = movieDates[date];
-                if( highlight ) {
-                    return [true, "holidayDate", highlight];
-                } 
-                else if (movieHightlight){
+                var day = date.getDay();
+                if (movieHightlight){ //Highlight days with movies scheduled
                     return [true, "movieDate", movieHightlight];
+                } 
+                else if (holidayHighlight) { //Highlight holidays
+                    return [true, "holidayDate", holidayHighlight];
+                } 
+                if (day == 5) { //Highlight Fridays
+                    return [true, "fridayDate", movieHightlight];
                 } else {
                     return [true, '', ''];
                 }
@@ -35,6 +37,7 @@ function runDatepicker(curDate, dates){
             changeYear: true,
             numberOfMonths: 3,
             defaultDate: curDate,
+            minDate: curDate,
         });
     });
 }

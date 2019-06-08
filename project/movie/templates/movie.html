@@ -1,6 +1,12 @@
 {% extends "base.html" %}
-{% block content %}
+{% block head %}
+<script src="/static/datepicker.js"></script> 
+<script>
+    runDatepicker("{{ movie.getProductionEnd() }}", "{{ system.dates|safe }}");
+</script>
+{% endblock %}
 
+{% block content %}
 <div class="text-center">
     <h2>{{ movie.title }} ({{ movie.status }})</h2>
 </div>
@@ -15,10 +21,10 @@
         <tr><td><strong>Status: </strong></td> <td>{{ movie.status }} </td></tr>
         <tr><td><strong>Release date: </strong></td> <td>{{ movie.release_date }} </td></tr>
         <tr><td><strong>Began production: </strong></td> <td>{{ movie.production_date }}</td> </tr>
-        <tr><td><strong>End pre-production: </strong></td> <td>{{ movie.pre_production_end }} </td></tr>
-        <tr><td><strong>End filming: </strong></td> <td>{{ movie.filming_end}} </td></tr>
-        <tr><td><strong>End post-production: </strong></td> <td>{{ movie.end_date }} </td></tr>
-        <tr><td><strong>Scale: </strong></td> <td>{{ movie.scale }} </td></tr>
+        <tr><td><strong>End pre-production: </strong></td> <td>{{ movie.getPreProEnd() }} </td></tr>
+        <tr><td><strong>End filming: </strong></td> <td>{{ movie.getFilmingEnd() }} </td></tr>
+        <tr><td><strong>End post-production: </strong></td> <td>{{ movie.getProductionEnd() }} </td></tr>
+        <tr><td><strong>Scale: </strong></td> <td>{{ movie.getScale() }} </td></tr>
         {% if movie.status == "Released" %}
         <tr><td><strong>Domestic gross: </strong></td> <td>{{ movie.dom_gross }} </td></tr>  
         <tr><td><strong>China gross: </strong></td> <td>{{ movie.china_gross }} </td></tr> 
@@ -32,12 +38,11 @@
             <h3>Actions</h3>
         <form method="post">
             <div class="form-group">
-                <label for="releaseDate">Change release date (Friday only)</label><br>
-                <input type="date" width="20 vw" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
-                request.form.date }}">
+                <label for="releaseDate">Change release date</label><br>
+                Date: <input type="text" id="calendar" name="release_date">
                 <input type="submit" name="submit_button" value="Change date">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="releaseDate">Change international release date (Friday only)(3M)</label><br>
                 <input type="date" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
                 request.form.date }}">
@@ -48,7 +53,7 @@
                 <input type="date" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
                 request.form.date }}">
                 <input type="submit" name="submit_button" value="Change china date">
-            </div> <br> 
+            </div> <br>  -->
         </form>
         <form method="post">
             <input type="submit" name="submit_button" value="Release trailer">
@@ -56,6 +61,7 @@
         <form method="post">
             <input type="submit" name="submit_button" value="Cancel movie">
         </form>
+        <br>
         <form method="post" enctype="multipart/form-data">
             <input type="file" name="poster">
             <input type="submit" name="submit_button" value="Change poster">

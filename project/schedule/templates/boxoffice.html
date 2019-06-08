@@ -1,11 +1,4 @@
 {% extends "base.html" %}
-{% block head %}
-<script src="static/datepicker.js"></script> 
-<script>
-    runDatepicker("{{ system.currentDate }}", "{{ dates|safe }}");
-    console.log("{{ system.currentDate }}");
-</script>
-{% endblock %}
 
 
 {% block content %}
@@ -35,7 +28,5 @@
     </div>
 </div>
 {% endfor %}
-
-<p>Date: <input type="text" id="calendar"></p>
 
 {% endblock %}
