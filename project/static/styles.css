@@ -15,7 +15,7 @@
 
 /* IDK why !important is needed here, but it doesn't work without it */
 .holidayDate a {
-  background-color: rgb(63, 117, 67) !important;
+  background-color: rgba(50, 241, 63, 0.473) !important;
   background-image :none !important;
   color: #ffffff !important;
 }
@@ -28,4 +28,11 @@
   background-color: rgb(5, 66, 24) !important;
   background-image :none !important;
   color: #ffffff !important;
+}
+
+/* Override highlighting of the current date */
+.ui-state-highlight {
+    border: 1px solid #d3d3d3 !important;
+    background-color: rgb(246,246,246)!important;
+    color: rgb(69,69,69) !important;
 }
