@@ -13,3 +13,14 @@
   color: white;
 }
 
+/* IDK why !important is needed here, but it doesn't work without it */
+.holidayDate a {
+  background-color: rgb(63, 117, 67) !important;
+  background-image :none !important;
+  color: #ffffff !important;
+}
+.movieDate a {
+  background-color: rgb(223, 82, 17) !important;
+  background-image :none !important;
+  color: #ffffff !important;
+}

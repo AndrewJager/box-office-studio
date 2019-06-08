@@ -1,40 +1,9 @@
 {% extends "base.html" %}
 {% block head %}
-<style>
-.event a {
-  background-color: #42B373 !important;
-  background-image :none !important;
-  color: #ffffff !important;
-}
-</style>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-        
-        var holidays = {};
-        var i;
-        var systemDate = '{{ system.currentDate }}';
-        for (i = 0; i <= 100; i++)
-        {
-            var year = '20' + i.toString().padStart(2, '0');
-            holidays[ new Date( '6/20/' + year )] = new Date( '6/20/' + year).toString(); 
-            holidays[ new Date( '6/25/' + year )] = new Date( '6/25/' + year).toString();   
-        }
-
-        jQuery('#calendar').datepicker({
-            beforeShowDay: function( date ) {
-                var highlight = holidays[date];
-                if( highlight ) {
-                     return [true, "event", highlight];
-                } else {
-                     return [true, '', ''];
-                }
-             },
-             dateFormat: "yy-mm-dd",
-             changeYear: true,
-             numberOfMonths: 3,
-             defaultDate: systemDate,
-        });
-    });
+<script src="static/datepicker.js"></script> 
+<script>
+    runDatepicker("{{ system.currentDate }}", "{{ dates|safe }}");
+    console.log("{{ system.currentDate }}");
 </script>
 {% endblock %}
 
