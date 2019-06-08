@@ -14,7 +14,6 @@ movie_blueprint = Blueprint(
 @movie_blueprint.route('/movie/<string:id>', methods=['GET', 'POST'])
 def movie(id):
     movie = Movie.query.filter_by(title=id).first()
-    movie.calcFields()
     localSystem = BoxOffice.query.first()
     user = current_user
     error=None

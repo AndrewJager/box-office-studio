@@ -54,16 +54,19 @@ class Movie(db.Model):
         self.release_date = None
         self.production_date = curDate
 
-    def calcFields(self):
-        #calculated fields
-        self.scale = round(((self.budget * self.getGenreScale(self.genre)) + 500) / 30)
-        self.pre_production_end = self.production_date + datetime.timedelta(days=self.scale * constants.PRE_PRODUCTION_LENGTH)
-        self.filming_end = self.production_date + datetime.timedelta(days=self.scale * constants.FILMING_LENGTH)
-        self.end_date = self.production_date + datetime.timedelta(days=self.scale) #date movie finishes filming
-        self.cur_gross = 0 #default
+    def getScale(self):
+        return round(((self.budget * self.getGenreScale(self.genre)) + 500) / 30)
+
+    def getPreProEnd(self):
+        return self.production_date + datetime.timedelta(days=self.scale * constants.PRE_PRODUCTION_LENGTH)
+
+    def getFilmingEnd(self):
+        return self.production_date + datetime.timedelta(days=self.scale * constants.FILMING_LENGTH)
+
+    def getProductionEnd(self):
+        return self.production_date + datetime.timedelta(days=self.scale)
 
     def update(self, currentDate):
-        self.calcFields()
         if self.status == "Pre-production":
             if currentDate > self.pre_production_end:
                 self.status = "Filming"
