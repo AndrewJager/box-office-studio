@@ -14,6 +14,10 @@ movie_blueprint = Blueprint(
 @movie_blueprint.route('/movie/<string:id>', methods=['GET', 'POST'])
 def movie(id):
     movie = Movie.query.filter_by(title=id).first()
+    results = Results.query.filter_by(movie=movie.title).order_by(Results.date).all()
+    resultsList = []
+    for i in results:
+        resultsList.append(i.movie_gross)
     localSystem = BoxOffice.query.first()
     user = current_user
     allMovies = Movie.query.all()
@@ -23,6 +27,7 @@ def movie(id):
             date = film.release_date
             dates.append(date.strftime('%m/%d/%y'))
     localSystem.dates = dates
+    localSystem.results = resultsList
 
     if request.method == 'POST':
         if request.form['submit_button'] == 'Change date':

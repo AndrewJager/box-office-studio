@@ -14,7 +14,6 @@ def admin():
     localSystem = BoxOffice.query.first()
     if request.method == 'POST':
         if request.form['submit_button'] == 'Next week':
-            
             i = 0
             while i < 7: #update for every day of week
                 # change date
