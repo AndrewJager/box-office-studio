@@ -17,7 +17,7 @@ def movie(id):
     results = Results.query.filter_by(movie=movie.title).order_by(Results.date).all()
     resultsList = []
     for i in results:
-        resultsList.append(i.movie_gross)
+        resultsList.append(round(i.movie_gross, 2))
     localSystem = BoxOffice.query.first()
     user = current_user
     allMovies = Movie.query.all()
