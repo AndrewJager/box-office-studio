@@ -12,7 +12,7 @@
     <h2>{{ movie.title }} ({{ movie.status }})</h2>
 </div>
 <div class="row pt-3">
-    <div class="col-6 text-center">
+    <div class="col-sm text-center">
         <h3>Data</h3>
         <table class="table">
         <img src="{{ movie.poster }}"> <br>
@@ -34,7 +34,7 @@
         </table>
     </div>
 
-    <div class="col-6 text-center">
+    <div class="col-sm text-center">
     {% if movie.status == "Released" or movie.status == "Closed" %}
     <h3>Stats</h3>
         <canvas id="myChart" width="400" height="400"></canvas>
