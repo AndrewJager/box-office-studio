@@ -4,7 +4,7 @@
 <h1>Front Page Header</h1>
 <br>
 <div class="row vl text-center">
-    <div class="col-4">
+    <div class="col-sm-4">
         <strong>News</strong>
         <hr>
         {% for post in news %}
@@ -12,7 +12,7 @@
             <p>{{ post.email }}</p>
         {% endfor %}
     </div>
-    <div class="col-4">
+    <div class="col-sm-4">
         <strong>Changes</strong>
         <hr>
         {% for movie in moviechanges %}
@@ -38,7 +38,7 @@
             {% endif %}
         {% endfor %}
     </div>
-    <div class="col-4">
+    <div class="col-sm-4">
         <strong>Box office</strong>
         <hr>
     </div>

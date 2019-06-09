@@ -2,19 +2,19 @@
 {% block content %}
 
 <div class="row pt-3">
-    <div class="col-2">
+    <div class="col-sm-2">
         <a class="btn btn-secondary btn-block" href= "/schedule/{{ offset - 28 }}">Previous</a>
     </div>
-    <div class="col-8 text-center">
+    <div class="col-sm-8 text-center">
         <h1>Release schedule</h1>
     </div>
-    <div class="col-2">
+    <div class="col-sm-2">
         <a class="btn btn-secondary btn-block" href= "/schedule/{{ offset + 28 }}">Next</a>
     </div>
 </div>
 <div class="row">
     {% for day in movies %}
-    <div class="col vl">
+    <div class="col-sm vl">
         <h5>{{ (system.currentDate + datetime.timedelta(days=offset)) + datetime.timedelta(days=((loop.index - 1) * 7)) }}</h5>
         <hr>
         {% for movie in movies[loop.index0] %}

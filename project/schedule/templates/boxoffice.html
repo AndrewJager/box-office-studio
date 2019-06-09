@@ -4,26 +4,26 @@
 {% block content %}
 
 <div class="row pt-3">
-    <div class="col-2">
+    <div class="col-sm-2">
         <a class="btn btn-secondary btn-block" href= "/boxoffice/{{ offset - 1 }}">Previous</a>
     </div>
-    <div class="col-8 text-center">
+    <div class="col-sm-8 text-center">
         <h1>Results</h1>
     </div>
-    <div class="col-2">
+    <div class="col-sm-2">
         <a class="btn btn-secondary btn-block" href= "/boxoffice/{{ offset + 1 }}">Next</a>
     </div>
 </div>
 
 {% for result in results %}
 <div class="row">
-    <div class="col">
+    <div class="col-sm">
         <a href="/movie/{{ result.movie }}">{{ result.movie }}</a>
     </div>
-    <div class="col">
+    <div class="col-sm">
         {{ result.movie_gross }}
     </div>
-    <div class="col">
+    <div class="col-sm">
         {{ result.date }}
     </div>
 </div>

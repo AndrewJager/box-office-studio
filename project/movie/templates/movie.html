@@ -13,28 +13,6 @@
 </div>
 <div class="row pt-3">
     <div class="col-sm text-center">
-        <h3>Data</h3>
-        <table class="table">
-        <img src="{{ movie.poster }}"> <br>
-        <tr><td><strong>Studio: </strong></td> <td>{{ movie.studio }} </td></tr>
-        <tr><td><strong>Genre: </strong></td> <td>{{ movie.genre }} </td></tr>
-        <tr><td><strong>Budget: </strong></td><td>{{ movie.budget }} </td> </tr>
-        <tr><td><strong>Status: </strong></td> <td>{{ movie.status }} </td></tr>
-        <tr><td><strong>Release date: </strong></td> <td>{{ movie.release_date }} </td></tr>
-        <tr><td><strong>Began production: </strong></td> <td>{{ movie.production_date }}</td> </tr>
-        <tr><td><strong>End pre-production: </strong></td> <td>{{ movie.getPreProEnd() }} </td></tr>
-        <tr><td><strong>End filming: </strong></td> <td>{{ movie.getFilmingEnd() }} </td></tr>
-        <tr><td><strong>End post-production: </strong></td> <td>{{ movie.getProductionEnd() }} </td></tr>
-        <tr><td><strong>Scale: </strong></td> <td>{{ movie.getScale() }} </td></tr>
-        {% if movie.status == "Released" %}
-        <tr><td><strong>Domestic gross: </strong></td> <td>{{ movie.dom_gross }} </td></tr>  
-        <tr><td><strong>China gross: </strong></td> <td>{{ movie.china_gross }} </td></tr> 
-        <tr><td><strong>Worldwide gross: </strong></td> <td>{{ movie.int_gross }} </td></tr>   
-        {% endif %}
-        </table>
-    </div>
-
-    <div class="col-sm text-center">
     {% if movie.status == "Released" or movie.status == "Closed" %}
     <h3>Stats</h3>
         <canvas id="myChart" width="400" height="400"></canvas>
@@ -102,6 +80,27 @@
             <input type="submit" name="submit_button" value="Change poster">
         </form>
     {% endif %}
+    </div>
+    <div class="col-sm text-center">
+        <h3>Data</h3>
+        <table class="table">
+        <img src="{{ movie.poster }}"> <br>
+        <tr><td><strong>Studio: </strong></td> <td>{{ movie.studio }} </td></tr>
+        <tr><td><strong>Genre: </strong></td> <td>{{ movie.genre }} </td></tr>
+        <tr><td><strong>Budget: </strong></td><td>{{ movie.budget }} </td> </tr>
+        <tr><td><strong>Status: </strong></td> <td>{{ movie.status }} </td></tr>
+        <tr><td><strong>Release date: </strong></td> <td>{{ movie.release_date }} </td></tr>
+        <tr><td><strong>Began production: </strong></td> <td>{{ movie.production_date }}</td> </tr>
+        <tr><td><strong>End pre-production: </strong></td> <td>{{ movie.getPreProEnd() }} </td></tr>
+        <tr><td><strong>End filming: </strong></td> <td>{{ movie.getFilmingEnd() }} </td></tr>
+        <tr><td><strong>End post-production: </strong></td> <td>{{ movie.getProductionEnd() }} </td></tr>
+        <tr><td><strong>Scale: </strong></td> <td>{{ movie.getScale() }} </td></tr>
+        {% if movie.status == "Released" %}
+        <tr><td><strong>Domestic gross: </strong></td> <td>{{ movie.dom_gross }} </td></tr>  
+        <tr><td><strong>China gross: </strong></td> <td>{{ movie.china_gross }} </td></tr> 
+        <tr><td><strong>Worldwide gross: </strong></td> <td>{{ movie.int_gross }} </td></tr>   
+        {% endif %}
+        </table>
     </div>
 </div>
 
