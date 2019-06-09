@@ -15,23 +15,28 @@ def admin():
     if request.method == 'POST':
         if request.form['submit_button'] == 'Next week':
             
-            # change date
-            lastDay = localSystem.currentDate
-            nextDay = localSystem.currentDate + datetime.timedelta(days=1)
-            localSystem.currentDate = nextDay
+            i = 0
+            while i < 7: #update for every day of week
+                # change date
+                lastDay = localSystem.currentDate
+                nextDay = localSystem.currentDate + datetime.timedelta(days=1)
+                localSystem.currentDate = nextDay
+
+                
+                # update movies
+                movies = db.session.query(Movie).all()
+                for movie in movies:
+                    lastDayGross = Results.query.filter_by(movie=movie.title, date=lastDay).first()
+                    movie.update(localSystem.currentDate, lastDayGross)
+                    if movie.status == "Released":
+                        gross = movie.cur_gross
+                        if gross > 0:
+                            result = Results(localSystem.currentDate, movie.title, gross)
+                            db.session.add(result)
+
+                i = i + 1
 
             # remove old announcemnts/changes
-            # update movies
-            movies = db.session.query(Movie).all()
-            for movie in movies:
-                lastDayGross = Results.query.filter_by(movie=movie.title, date=lastDay).first()
-                movie.update(localSystem.currentDate, lastDayGross)
-                if movie.status == "Released":
-                    gross = movie.cur_gross
-                    if gross > 0:
-                        result = Results(localSystem.currentDate, movie.title, gross)
-                        db.session.add(result)
-
             # create announcments
 
             db.session.commit()

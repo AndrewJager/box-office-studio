@@ -90,7 +90,7 @@ class Movie(db.Model):
             if lastGross is None: #opening
                 self.cur_gross = (hype * self.getScale())
             else:
-                self.cur_gross = lastGross.movie_gross / 2
+                self.cur_gross = lastGross.movie_gross / 1.2
             self.dom_gross += self.cur_gross
             if self.cur_gross < constants.MIN_GROSS_CUTOFF:
                 self.status = "Closed"
