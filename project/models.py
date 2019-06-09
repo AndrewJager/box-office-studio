@@ -66,17 +66,17 @@ class Movie(db.Model):
     def getProductionEnd(self):
         return self.production_date + datetime.timedelta(days=self.getScale())
 
-    def update(self, currentDate):
+    def update(self, currentDate, lastGross):
         if self.status == "Pre-production":
-            if currentDate > self.pre_production_end:
+            if currentDate > self.getPreProEnd():
                 self.status = "Filming"
             
         if self.status == "Filming":
-            if currentDate > self.filming_end:
+            if currentDate > self.getFilmingEnd():
                 self.status = "Post-production"
             
         if self.status == "Post-production":
-            if currentDate > self.end_date:
+            if currentDate > self.getProductionEnd():
                 self.status = "Finished"
 
         if self.status == "Finished":
@@ -86,9 +86,15 @@ class Movie(db.Model):
 
         if self.status == "Released":
             hype = 10 #temp
-            weeks = 1
-            self.cur_gross = (hype * self.scale) / weeks
+            weeks = 2
+            if lastGross is None: #opening
+                self.cur_gross = (hype * self.getScale())
+            else:
+                self.cur_gross = lastGross.movie_gross / 2
             self.dom_gross += self.cur_gross
+            if self.cur_gross < constants.MIN_GROSS_CUTOFF:
+                self.status = "Closed"
+
 
     def getGenreScale(self, genre):
         if genre == "Sci-Fi":
