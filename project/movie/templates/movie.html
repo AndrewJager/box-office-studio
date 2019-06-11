@@ -2,6 +2,7 @@
 {% block head %}
 <script src="/static/datepicker.js"></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script src="/static/movie-graph.js"></script>
 <script>
     runDatepicker("{{ movie.getProductionEnd() }}", "{{ system.dates|safe }}");
 </script>
@@ -64,38 +65,7 @@
         <h3>Stats</h3>
             <canvas id="myChart" width="400" height="400"></canvas>
             <script>
-                var results = '{{ system.results|safe }}';
-                let resultsArray = results.replace('[','').replace(']','').split(",");
-                console.log(resultsArray);
-                var ctx = document.getElementById('myChart').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: resultsArray,
-                        datasets: [{
-                            label: 'Daily gross',
-                            data: resultsArray,
-                            backgroundColor: '#082656',
-                            borderWidth: 4,
-                            fill: false,
-                        }],
-                        borderWidth: 1,
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
-                        },
-                        elements: {
-                            line: {
-                                tension: 0,
-                            }
-                        }
-                    }
-                });
+                runGraph('{{ system.results|safe }}');     
             </script>
             <hr>
         {% endif %}
