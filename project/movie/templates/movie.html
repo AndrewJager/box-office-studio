@@ -12,39 +12,16 @@
     <h2>{{ movie.title }} ({{ movie.status }})</h2>
 </div>
 <div class="row pt-3">
-    <div class="col-sm text-center">
-    {% if movie.status == "Released" or movie.status == "Closed" %}
-    <h3>Stats</h3>
-        <canvas id="myChart" width="400" height="400"></canvas>
-        <script>
-            var results = '{{ system.results|safe }}';
-            let resultsArray = results.replace('[','').replace(']','').split(",");
-            console.log(resultsArray);
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: resultsArray,
-                    datasets: [{
-                        label: 'Daily gross',
-                        data: resultsArray,
-                        backgroundColor: '#082656',
-                        borderWidth: 1,
-                    }],
-                    borderWidth: 1,
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
-                }
-            });
-        </script>
+    <div class="col-md-6 text-center">
+    <img src="{{ movie.poster }}"> <br>
+    <h3>{{ movie.title }}</h3>
+    <h5>Presented by {{ movie.studio }}</h5>
+    {% if movie.release_date %}
+    <h5>{{ movie.release_date }}</h5>
     {% endif %}
+
+    <hr>
+
     {% if user.studio == movie.studio %}
         <h3>Actions</h3>
         {% if movie.status != "Released" and movie.status != "Closed" %}
@@ -79,12 +56,51 @@
             <input type="file" name="poster">
             <input type="submit" name="submit_button" value="Change poster">
         </form>
+        <hr>
     {% endif %}
     </div>
-    <div class="col-sm text-center">
+    <div class="col-md-6 text-center">
+        {% if movie.status == "Released" or movie.status == "Closed" %}
+        <h3>Stats</h3>
+            <canvas id="myChart" width="400" height="400"></canvas>
+            <script>
+                var results = '{{ system.results|safe }}';
+                let resultsArray = results.replace('[','').replace(']','').split(",");
+                console.log(resultsArray);
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: resultsArray,
+                        datasets: [{
+                            label: 'Daily gross',
+                            data: resultsArray,
+                            backgroundColor: '#082656',
+                            borderWidth: 4,
+                            fill: false,
+                        }],
+                        borderWidth: 1,
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        elements: {
+                            line: {
+                                tension: 0,
+                            }
+                        }
+                    }
+                });
+            </script>
+            <hr>
+        {% endif %}
         <h3>Data</h3>
         <table class="table">
-        <img src="{{ movie.poster }}"> <br>
         <tr><td><strong>Studio: </strong></td> <td>{{ movie.studio }} </td></tr>
         <tr><td><strong>Genre: </strong></td> <td>{{ movie.genre }} </td></tr>
         <tr><td><strong>Budget: </strong></td><td>{{ movie.budget }} </td> </tr>
@@ -101,6 +117,7 @@
         <tr><td><strong>Worldwide gross: </strong></td> <td>{{ movie.int_gross }} </td></tr>   
         {% endif %}
         </table>
+        <hr>
     </div>
 </div>
 

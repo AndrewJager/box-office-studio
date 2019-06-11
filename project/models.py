@@ -53,6 +53,7 @@ class Movie(db.Model):
         self.china_gross = 0
         self.release_date = None
         self.production_date = curDate
+        self.poster = '/static/images/no-poster.png'
 
     def getScale(self):
         return round(((self.budget * self.getGenreScale(self.genre)) + 500) / 30)
