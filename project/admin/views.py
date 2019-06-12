@@ -26,11 +26,13 @@ def admin():
                 movies = db.session.query(Movie).all()
                 for movie in movies:
                     lastDayGross = Results.query.filter_by(movie=movie.title, date=lastDay).first()
+                    studio = User.query.filter_by(studio=movie.studio).first()
                     movie.update(localSystem.currentDate, lastDayGross)
                     if movie.status == "Released":
                         gross = movie.cur_gross
                         if gross > 0:
                             result = Results(localSystem.currentDate, movie.title, gross)
+                            studio.cash = studio.cash + gross
                             db.session.add(result)
 
                 i = i + 1

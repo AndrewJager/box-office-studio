@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="text-center">
-    <h1>{{ user.studio }}</h1> <h2>Cash: {{ user.cash}}M</h2> <h2>{{ system.currentDate }}</h2>
+    <h1>{{ user.studio }}</h1> <h2>Cash: {{ user.cash|round(2) }}M</h2> <h2>{{ system.currentDate }}</h2>
 </div>
 <hr>
 <div class="row">
@@ -33,10 +33,10 @@
         {% for movie in movies %}
             <a class="btn btn-secondary btn-block pl-5" href= "/movie/{{ movie.title }}">
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-md-2">
                         <img src="{{ movie.poster }}" height="100px">
                     </div>
-                    <div class="col-8">
+                    <div class="col-md-8">
                         <strong>Title: </strong> {{ movie.title }} <br>
                         <strong>Genre: </strong> {{ movie.genre }}<br>
                         <strong>Release date: </strong> {{ movie.release_date }} <br>

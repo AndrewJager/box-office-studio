@@ -21,7 +21,7 @@
         <a href="/movie/{{ result.movie }}">{{ result.movie }}</a>
     </div>
     <div class="col-sm">
-        {{ result.movie_gross }}
+        {{ result.movie_gross|round(2) }}M
     </div>
     <div class="col-sm">
         {{ result.date }}

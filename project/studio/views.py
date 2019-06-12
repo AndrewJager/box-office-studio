@@ -29,5 +29,5 @@ def studio():
             return redirect(url_for('home.home'))
             
     else:
-        movies = Movie.query.filter_by(studio=user.studio).all()
+        movies = Movie.query.filter_by(studio=user.studio).order_by(Movie.release_date).all()
         return render_template("studio.html", user=current_user, system=localSystem, movies=movies)
