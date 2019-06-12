@@ -67,7 +67,7 @@ class Movie(db.Model):
     def getProductionEnd(self):
         return self.production_date + datetime.timedelta(days=self.getScale())
 
-    def update(self, currentDate, lastGross):
+    def update(self, currentDate, lastGross, weekday):
         if self.status == "Pre-production":
             if currentDate > self.getPreProEnd():
                 self.status = "Filming"
@@ -87,11 +87,14 @@ class Movie(db.Model):
 
         if self.status == "Released":
             hype = 10 #temp
-            weeks = 2
             if lastGross is None: #opening
                 self.cur_gross = (hype * self.getScale())
             else:
-                self.cur_gross = lastGross.movie_gross / 1.2
+                if self.getWeekdayScale(weekday) != 0:
+                    self.cur_gross = lastGross.movie_gross * self.getWeekdayScale(weekday)
+                else:
+                    self.cur_gross = lastGross.movie_gross / 1.2
+
             self.dom_gross += self.cur_gross
             if self.cur_gross < constants.MIN_GROSS_CUTOFF:
                 self.status = "Closed"
@@ -116,6 +119,18 @@ class Movie(db.Model):
             scale = 6
 
         return scale
+
+    def getWeekdayScale(self, weekday):
+        if weekday == 0:
+            return constants.MONDAY_MODIFIER
+        elif weekday == 1:
+            return constants.TUESDAY_MODIFIER
+        elif weekday == 3:
+            return constants.WENDSDAY_MODIFIER
+        elif weekday == 4:
+            return constants.THURSDAY_MODIFIER
+        else:
+            return 0
 
 
 class BoxOffice(db.Model):

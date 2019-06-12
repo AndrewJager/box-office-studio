@@ -17,25 +17,24 @@ def admin():
             i = 0
             while i < 7: #update for every day of week
                 # change date
-                lastDay = localSystem.currentDate
-                nextDay = localSystem.currentDate + datetime.timedelta(days=1)
-                localSystem.currentDate = nextDay
-
+                lastDay = localSystem.currentDate - datetime.timedelta(days=1)
+                weekday = localSystem.currentDate.weekday()
                 
                 # update movies
                 movies = db.session.query(Movie).all()
                 for movie in movies:
                     lastDayGross = Results.query.filter_by(movie=movie.title, date=lastDay).first()
                     studio = User.query.filter_by(studio=movie.studio).first()
-                    movie.update(localSystem.currentDate, lastDayGross)
+                    movie.update(localSystem.currentDate, lastDayGross, weekday)
                     if movie.status == "Released":
                         gross = movie.cur_gross
                         if gross > 0:
                             result = Results(localSystem.currentDate, movie.title, gross)
-                            studio.cash = studio.cash + gross
+                            studio.cash = studio.cash + (gross * constants.STUDIO_CUT_USA)
                             db.session.add(result)
 
                 i = i + 1
+                localSystem.currentDate = localSystem.currentDate + datetime.timedelta(days=1)
 
             # remove old announcemnts/changes
             # create announcments

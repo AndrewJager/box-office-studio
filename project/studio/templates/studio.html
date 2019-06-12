@@ -32,17 +32,17 @@
         <h3>Your movies </h3>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="upcoming" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Upcoming</a>
+                <a class="nav-link active" id="upcoming" data-toggle="tab" href="#future" role="tab" aria-controls="future" aria-selected="true">Upcoming</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="released" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Released</a>
+                <a class="nav-link" id="released" data-toggle="tab" href="#gone" role="tab" aria-controls="gone" aria-selected="false">Released</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="undated" data-toggle="tab" href="#nodate" role="tab" aria-controls="nodate" aria-selected="false">Undated</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="upcoming">
+            <div class="tab-pane fade show active" id="future" role="tabpanel" aria-labelledby="upcoming">
                 {% for movie in upcomingMovies %}
                     <a class="btn btn-secondary btn-block pl-5" href= "/movie/{{ movie.title }}">
                         <div class="row">
@@ -60,7 +60,7 @@
                     <hr>
                 {% endfor %}
             </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="released">
+            <div class="tab-pane fade" id="gone" role="tabpanel" aria-labelledby="released">
                 {% for movie in releasedMovies %}
                     <a class="btn btn-secondary btn-block pl-5" href= "/movie/{{ movie.title }}">
                         <div class="row">

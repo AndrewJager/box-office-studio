@@ -9,6 +9,7 @@ TUESDAY_MODIFIER = 0.55
 WENDSDAY_MODIFIER = 0.40
 THURSDAY_MODIFIER = 0.35
 
+STUDIO_CUT_USA = 0.50
 
 
 #     rules for box office calculation
