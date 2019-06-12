@@ -30,22 +30,73 @@
     </div>
     <div class="col-8 text-center">
         <h3>Your movies </h3>
-        {% for movie in movies %}
-            <a class="btn btn-secondary btn-block pl-5" href= "/movie/{{ movie.title }}">
-                <div class="row">
-                    <div class="col-md-2">
-                        <img src="{{ movie.poster }}" height="100px">
-                    </div>
-                    <div class="col-md-8">
-                        <strong>Title: </strong> {{ movie.title }} <br>
-                        <strong>Genre: </strong> {{ movie.genre }}<br>
-                        <strong>Release date: </strong> {{ movie.release_date }} <br>
-                        <strong>Budget: </strong> {{ movie.budget }}<br>
-                    </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="upcoming" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Upcoming</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="released" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Released</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="undated" data-toggle="tab" href="#nodate" role="tab" aria-controls="nodate" aria-selected="false">Undated</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="upcoming">
+                {% for movie in upcomingMovies %}
+                    <a class="btn btn-secondary btn-block pl-5" href= "/movie/{{ movie.title }}">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="{{ movie.poster }}" height="100px">
+                            </div>
+                            <div class="col-md-8">
+                                <strong>Title: </strong> {{ movie.title }} <br>
+                                <strong>Genre: </strong> {{ movie.genre }}<br>
+                                <strong>Release date: </strong> {{ movie.release_date }} <br>
+                                <strong>Budget: </strong> {{ movie.budget }}<br>
+                            </div>
+                        </div>
+                    </a>
+                    <hr>
+                {% endfor %}
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="released">
+                {% for movie in releasedMovies %}
+                    <a class="btn btn-secondary btn-block pl-5" href= "/movie/{{ movie.title }}">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="{{ movie.poster }}" height="100px">
+                            </div>
+                            <div class="col-md-8">
+                                <strong>Title: </strong> {{ movie.title }} <br>
+                                <strong>Genre: </strong> {{ movie.genre }}<br>
+                                <strong>Release date: </strong> {{ movie.release_date }} <br>
+                                <strong>Budget: </strong> {{ movie.budget }}<br>
+                            </div>
+                        </div>
+                    </a>
+                    <hr>
+                {% endfor %}
+            </div>
+            <div class="tab-pane fade" id="nodate" role="tabpanel" aria-labelledby="undated">
+                    {% for movie in undatedMovies %}
+                        <a class="btn btn-secondary btn-block pl-5" href= "/movie/{{ movie.title }}">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="{{ movie.poster }}" height="100px">
+                                </div>
+                                <div class="col-md-8">
+                                    <strong>Title: </strong> {{ movie.title }} <br>
+                                    <strong>Genre: </strong> {{ movie.genre }}<br>
+                                    <strong>Release date: </strong> {{ movie.release_date }} <br>
+                                    <strong>Budget: </strong> {{ movie.budget }}<br>
+                                </div>
+                            </div>
+                        </a>
+                        <hr>
+                    {% endfor %}
                 </div>
-            </a>
-            <hr>
-        {% endfor %}
+        </div>
     </div>
 </div>
 

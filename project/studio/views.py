@@ -13,6 +13,9 @@ def studio():
     error = None
     localSystem = BoxOffice.query.first()
     user = current_user
+    upcomingMovies = Movie.query.filter_by(studio=user.studio).filter(Movie.release_date > localSystem.currentDate).order_by(Movie.release_date).all()
+    releasedMovies = Movie.query.filter_by(studio=user.studio).filter(Movie.release_date <= localSystem.currentDate).order_by(Movie.release_date).all()
+    undatedMovies = Movie.query.filter_by(studio=user.studio).filter_by(release_date = None).order_by(Movie.release_date).all()
     if request.method == "POST":
         if 'title' in request.form:
             canAdd = Movie.query.filter_by(title=request.form['title']).first()
@@ -23,11 +26,9 @@ def studio():
                 db.session.commit()
             else:
                 error="A movie with that title exists"
-            movies = Movie.query.filter_by(studio=user.studio).all()
-            return render_template("studio.html", user=current_user, system=localSystem, movies=movies, error=error)
+            return render_template("studio.html", user=current_user, system=localSystem, upcomingMovies=upcomingMovies, releasedMovies=releasedMovies, undatedMovies=undatedMovies)
         else:
             return redirect(url_for('home.home'))
             
     else:
-        movies = Movie.query.filter_by(studio=user.studio).order_by(Movie.release_date).all()
-        return render_template("studio.html", user=current_user, system=localSystem, movies=movies)
+        return render_template("studio.html", user=current_user, system=localSystem, upcomingMovies=upcomingMovies, releasedMovies=releasedMovies, undatedMovies=undatedMovies)
