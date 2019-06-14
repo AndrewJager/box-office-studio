@@ -3,7 +3,7 @@ from project.models import *
 from project import db
 from flask_login import current_user
 import datetime
-from cloudinary.uploader import upload
+from cloudinary.uploader import upload, destroy
 from cloudinary.utils import cloudinary_url
 
 movie_blueprint = Blueprint(
@@ -40,7 +40,7 @@ def movie(id):
         elif request.form['submit_button'] == 'Change poster':
             file_to_upload = request.files['poster']
             if file_to_upload:
-                poster = upload(file_to_upload, width=200, height=350, crop="limit")
+                poster = upload(file_to_upload, width=200, height=350, crop="limit", folder='Box-Office-Studio/Posters', public_id=movie.title)
                 movie.poster = poster['url']
                 db.session.merge(movie)
                 db.session.commit()
@@ -48,7 +48,6 @@ def movie(id):
         elif request.form['submit_button'] == 'Release trailer':
             pass # do something else
         elif request.form['submit_button'] == 'Cancel movie':
-            movie = movie.movie
             user.cash = user.cash + (movie.budget - movie.budget_spent)
             db.session.add(MovieChange(movie.title, user.studio, localSystem.currentDate, False))
             db.session.delete(movie)
