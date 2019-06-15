@@ -14,44 +14,56 @@
         {% block head %}{% endblock %}
     </head>
     <body>
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end">
-                    <a class="navbar-brand" href="#">Navbar</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                        <a class="nav-item nav-link {{ 'active' if active_page == 'home' else '' }}" href="/">Home <span class="sr-only">(current)</span></a>
-                        <a class="nav-item nav-link {{ 'active' if active_page == 'boxOffice' else '' }}" href="/boxoffice">Box office</a>
-                        <a class="nav-item nav-link {{ 'active' if active_page == 'schedule' else '' }}" href="/schedule">Schedule</a>
-                        <a class="nav-item nav-link {{ 'active' if active_page == 'studio' else '' }}" href="/studio">Studio</a>
-                        <p class="menuDate"><small>{{ system.currentDate }}</small></p>
-                        <ul class="navbar-nav">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">Box Office Studio</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                  
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-item nav-link {{ 'active' if active_page == 'home' else '' }}" href="/">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link {{ 'active' if active_page == 'boxOffice' else '' }}" href="/boxoffice">Box office</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link {{ 'active' if active_page == 'schedule' else '' }}" href="/schedule">Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link {{ 'active' if active_page == 'studio' else '' }}" href="/studio">Studio</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
                         {% if user.is_authenticated %}
-                            <li class="nav-item pl-5"><a class="nav-item nav-link {{ 'active' if active_page == 'user' else '' }}" href="/user">{{ user.name }}</a></li>
-                            <li class="nav-item"></li><a class="nav-item nav-link" href="/logout">Logout</a></ul>
+                            <li class="nav-item"><a class="nav-item nav-link {{ 'active' if active_page == 'user' else '' }}" href="/user">{{ user.name }}</a></li>
+                            <li class="nav-item"><a class="nav-item nav-link" href="/logout">Logout</a></li>
                         {% else %}
-                            <li class="nav-item pl-5"><a class="nav-item nav-link" href="/login">Login</a></li>
+                            <li class="nav-item"><a class="nav-item nav-link" href="/login">Login</a></li>
                         {% endif %}
                         {% if user.isAdmin %}
                             <li class="nav-item"><a class="nav-item nav-link {{ 'active' if active_page == 'admin' else '' }}" href="/admin">Admin</a></li>
                         {% endif %}
-                        </ul>
-                        </div>
+                    </ul> 
+                      <!-- <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                      </form> -->
+                </div>
+            </nav>
+            {% if error %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ error }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     </div>
-                </nav>
-
-                {% if error %}
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>{{ error }}</strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                {% endif %}
-
-            {% block content %}{% endblock %}
+            {% endif %}
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
         </div>
     </body>
 </html>

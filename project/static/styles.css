@@ -9,8 +9,8 @@
     overflow-y: scroll;
   }
 
-.menuDate {
-  color: white;
+.navbar-brand {
+  margin-right: 6%;
 }
 
 /* IDK why !important is needed here, but it doesn't work without it */
