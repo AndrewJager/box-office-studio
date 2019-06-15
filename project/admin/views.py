@@ -3,6 +3,7 @@ from project.models import *
 from project import db
 from flask_login import current_user
 import datetime
+from cloudinary.uploader import destroy
 
 admin_blueprint = Blueprint(
     'admin', __name__,
@@ -44,6 +45,9 @@ def admin():
             BoxOffice.query.delete()
             db.session.add(BoxOffice("2019-3-1"))
             DateChange.query.delete()
+            movies = Movie.query.all()
+            for movie in movies:
+                destroy('Box-Office-Studio/Posters/' + movie.title)
             Movie.query.delete()
             MovieChange.query.delete()
             Results.query.delete()
