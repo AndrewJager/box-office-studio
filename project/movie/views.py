@@ -50,6 +50,8 @@ def movie(id):
         elif request.form['submit_button'] == 'Cancel movie':
             user.cash = user.cash + (movie.budget - movie.budget_spent)
             destroy('Box-Office-Studio/Posters/' + movie.title)
+            changes = DateChange.query.filter_by(movie=movie.title).delete()
+           # db.session.delete(changes)
             db.session.add(MovieChange(movie.title, user.studio, localSystem.currentDate, False))
             db.session.delete(movie)
             db.session.commit()

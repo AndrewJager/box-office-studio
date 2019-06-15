@@ -22,20 +22,20 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
-                        <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-                        <a class="nav-item nav-link" href="/boxoffice">Box office</a>
-                        <a class="nav-item nav-link" href="/schedule">Schedule</a>
-                        <a class="nav-item nav-link pr-5" href="/studio">Studio</a>
+                        <a class="nav-item nav-link {{ 'active' if active_page == 'home' else '' }}" href="/">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link {{ 'active' if active_page == 'boxOffice' else '' }}" href="/boxoffice">Box office</a>
+                        <a class="nav-item nav-link {{ 'active' if active_page == 'schedule' else '' }}" href="/schedule">Schedule</a>
+                        <a class="nav-item nav-link {{ 'active' if active_page == 'studio' else '' }}" href="/studio">Studio</a>
                         <p class="menuDate"><small>{{ system.currentDate }}</small></p>
                         <ul class="navbar-nav">
                         {% if user.is_authenticated %}
-                            <li class="nav-item pl-5"><a class="nav-item nav-link" href="/user">{{ user.name }}</a></li>
+                            <li class="nav-item pl-5"><a class="nav-item nav-link {{ 'active' if active_page == 'user' else '' }}" href="/user">{{ user.name }}</a></li>
                             <li class="nav-item"></li><a class="nav-item nav-link" href="/logout">Logout</a></ul>
                         {% else %}
                             <li class="nav-item pl-5"><a class="nav-item nav-link" href="/login">Login</a></li>
                         {% endif %}
                         {% if user.isAdmin %}
-                            <li class="nav-item"><a class="nav-item nav-link" href="/admin">Admin</a></li>
+                            <li class="nav-item"><a class="nav-item nav-link {{ 'active' if active_page == 'admin' else '' }}" href="/admin">Admin</a></li>
                         {% endif %}
                         </ul>
                         </div>
