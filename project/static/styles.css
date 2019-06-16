@@ -6,7 +6,7 @@
   --red: #ED1C24;
   --light-grey: #dfdfdf;
   --dark-grey: rgb(52, 58, 64);
-  --text-grey: rgb(158, 182, 194);
+  --text-grey: rgb(182, 198, 206);
 }
 
 body {
@@ -43,7 +43,6 @@ body {
 
 .btn-schedule {
   color: var(--text-grey);
-  border-color: var(--purple);
   background-color: var(--dark-grey);
 }
 
@@ -52,4 +51,11 @@ body {
   border-width: 1.5px;
   border-radius: 2px;
   border-color: var(--purple);
+}
+
+.text-custom { /* Hate this, but it works */
+  color: var(--text-grey)!important;
+}
+.active-custom {
+  color: white!important;
 }
