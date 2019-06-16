@@ -1,13 +1,17 @@
-.vl {
-    border-style: solid;
-    border-width: 2px;
-    border-color: green;
+:root { /* configure color vars */
+  --purple: rgb(146, 79, 233);
+  --blue: #3F66AF;
+  --ice: #89D2DC;
+  --green: #15B280;
+  --red: #ED1C24;
+  --light-grey: #dfdfdf;
+  --dark-grey: rgb(52, 58, 64);
+  --text-grey: rgb(158, 182, 194);
 }
 
-.mainPageBox {
-    height: 150px;
-    overflow-y: scroll;
-  }
+body {
+  background-color: var(--light-grey);
+}
 
 .navbar-brand {
   margin-right: 6%;
@@ -35,4 +39,17 @@
     border: 1px solid #d3d3d3 !important;
     background-color: rgb(246,246,246)!important;
     color: rgb(69,69,69) !important;
+}
+
+.btn-schedule {
+  color: var(--text-grey);
+  border-color: var(--purple);
+  background-color: var(--dark-grey);
+}
+
+.border-schedule {
+  border-style: solid;
+  border-width: 1.5px;
+  border-radius: 2px;
+  border-color: var(--purple);
 }
