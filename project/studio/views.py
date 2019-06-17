@@ -20,14 +20,17 @@ def studio():
     if request.method == "POST":
         if 'title' in request.form:
             canAdd = Movie.query.filter_by(title=request.form['title']).first()
-            if canAdd is None:
-                user.cash = user.cash - int(request.form['budget'])
-                db.session.add(MovieChange(request.form['title'], user.studio, localSystem.currentDate, True))
-                db.session.add(Movie(request.form['title'], user.studio, request.form['genre'], request.form['budget'], localSystem.currentDate))
-                db.session.commit()
+            if canAdd is None: 
+                if request.form['budget'] != '' and int(request.form['budget']) >= 1:
+                    user.cash = user.cash - int(request.form['budget'])
+                    db.session.add(MovieChange(request.form['title'], user.studio, localSystem.currentDate, True))
+                    db.session.add(Movie(request.form['title'], user.studio, request.form['genre'], request.form['budget'], localSystem.currentDate))
+                    db.session.commit()
+                else:
+                    error="Movie budget must be at least one"
             else:
                 error="A movie with that title exists"
-            return render_template("studio.html", user=current_user, system=localSystem, movies=movies)
+            return render_template("studio.html", error=error, user=current_user, system=localSystem, movies=movies)
             return redirect(url_for('home.home'))
             
     else:
