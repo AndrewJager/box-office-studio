@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, request, \
    url_for, Blueprint
 from flask_login import login_user, login_required, logout_user, current_user
 from project.users.form import LoginForm, RegisterForm
-from project.models import User, bcryptObj, BoxOffice
+from project.models import User, bcryptObj, BoxOffice, Movie
 from project import db
 
 users_blueprint = Blueprint(
@@ -56,21 +56,29 @@ def register():
 def user():
     localSystem = BoxOffice.query.first()
     thisUser = current_user
+    movies = {}
+    movies[0] = Movie.query.filter_by(studio=thisUser.studio).filter(Movie.release_date > localSystem.currentDate).order_by(Movie.release_date).all()
+    movies[1] = Movie.query.filter_by(studio=thisUser.studio).filter(Movie.release_date <= localSystem.currentDate).order_by(Movie.release_date).all()
+    movies[2] = Movie.query.filter_by(studio=thisUser.studio).filter_by(release_date = None).order_by(Movie.release_date).all()
     confirm = False
     if request.method == 'POST':
         confirm = userPost(confirm, thisUser)
 
-    return render_template('user.html', system=localSystem, user=current_user, thisUser=thisUser, confirm=confirm)
+    return render_template('user.html', system=localSystem, user=current_user, thisUser=thisUser, confirm=confirm, movies=movies)
 
 @users_blueprint.route('/user/<string:id>', methods=['GET', 'POST'])
 def specificUser(id):
     localSystem = BoxOffice.query.first()
     thisUser = User.query.filter_by(name=id).first()
+    movies = {}
+    movies[0] = Movie.query.filter_by(studio=thisUser.studio).filter(Movie.release_date > localSystem.currentDate).order_by(Movie.release_date).all()
+    movies[1] = Movie.query.filter_by(studio=thisUser.studio).filter(Movie.release_date <= localSystem.currentDate).order_by(Movie.release_date).all()
+    movies[2] = Movie.query.filter_by(studio=thisUser.studio).filter_by(release_date = None).order_by(Movie.release_date).all()
     confirm = False
     if request.method == 'POST':
         confirm = userPost(confirm, thisUser)
 
-    return render_template('user.html', system=localSystem, user=current_user, thisUser=thisUser, confirm=confirm)
+    return render_template('user.html', system=localSystem, user=current_user, thisUser=thisUser, confirm=confirm, movies=movies)
 
 def userPost(confirm, thisUser):
     if request.form['submit_button'] == 'Change password':
