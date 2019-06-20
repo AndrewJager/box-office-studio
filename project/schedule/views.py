@@ -32,7 +32,6 @@ def schedules(offset):
         weekEnd = ((curDate + datetime.timedelta(days=i*7)) +datetime.timedelta(days=int(offset))) + datetime.timedelta(days=6)
         movies[i] = db.session.query(Movie).filter(Movie.release_date >= (curDate + datetime.timedelta(days=int(offset))) + datetime
         .timedelta(days=i*7)).filter(Movie.release_date <= weekEnd).all()
-        #movies[i] = Movie.query.filter_by(release_date=((localSystem.currentDate + datetime.timedelta(days=int(offset))) + datetime.timedelta(days=i*7))).all()
         i = i + 1
         
     return render_template("schedule.html", user=current_user, system=localSystem, movies=movies, datetime=datetime, offset=int(offset))
@@ -41,12 +40,20 @@ def schedules(offset):
 def boxoffice():
     localSystem = BoxOffice.query.first()
     results = Results.query.filter_by(date=localSystem.currentDate).all()
-
+    
     return render_template("boxoffice.html", user=current_user, system=localSystem, results=results, offset=0)
 
 @schedule_blueprint.route('/boxoffice/<string:offset>')
 def boxoffices(offset):
     localSystem = BoxOffice.query.first()
     date = (localSystem.currentDate + datetime.timedelta(days=int(offset)))
-    results = Results.query.filter_by(date=date).all()
-    return render_template("boxoffice.html", user=current_user, system=localSystem, results=results, offset=int(offset))
+    data = {}
+    data['results'] = Results.query.filter_by(date=date).order_by(Results.movie_gross.desc()).all()
+    data['results_arr'] = []
+    data['titles'] = []
+    for i in data['results']:
+        data['results_arr'].append(i.movie_gross)
+        data['titles'].append(i.movie)
+
+
+    return render_template("boxoffice.html", user=current_user, system=localSystem, data=data, offset=int(offset))

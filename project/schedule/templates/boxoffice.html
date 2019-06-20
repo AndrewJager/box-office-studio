@@ -1,7 +1,48 @@
 {% extends "base.html" %}
 {% set active_page = "boxOffice" %}
 
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script>
+function runGraph(results, titles){
+    let resultsArray = results.replace('[','').replace(']','').split(",");
+    let titleArray = titles.replace('[','').replace(']','').split(",");
+    console.log(resultsArray);
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: titleArray,
+            datasets: [{
+                label: 'Daily gross',
+                data: resultsArray,
+                backgroundColor: '#082656',
+                borderWidth: 4,
+                fill: false,
+            }],
+            borderWidth: 1,
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            elements: {
+                line: {
+                    tension: 0,
+                }
+            }
+        }
+    });
+}
+</script>
+{% endblock %}
+
 {% block content %}
+
 
 <div class="row pt-3">
     <div class="col-sm-2">
@@ -14,19 +55,25 @@
         <a class="btn btn-secondary btn-block" href= "/boxoffice/{{ offset + 1 }}">Next</a>
     </div>
 </div>
-
-{% for result in results %}
 <div class="row">
-    <div class="col-sm">
-        <a href="/movie/{{ result.movie }}">{{ result.movie }}</a>
+    <div class="col-sm-6">
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <script>
+            runGraph('{{ data["results_arr"]|safe + ", " + data["titles"]|safe }}');     
+        </script>
     </div>
-    <div class="col-sm">
-        {{ result.movie_gross|round(2) }}M
-    </div>
-    <div class="col-sm">
-        {{ result.date }}
+    <div class="col-sm-6">
+        {% for result in data['results'] %}
+        <div class="row">
+            <div class="col-sm">
+                <a href="/movie/{{ result.movie }}">{{ result.movie }}</a>
+            </div>
+            <div class="col-sm">
+                {{ result.movie_gross|round(2) }}M
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
-{% endfor %}
 
 {% endblock %}

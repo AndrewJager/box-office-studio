@@ -13,6 +13,8 @@ admin_blueprint = Blueprint(
 @admin_blueprint.route('/admin', methods=['GET', 'POST'])
 def admin():
     localSystem = BoxOffice.query.first()
+    users = User.query.all()
+    movies = Movie.query.all()
     if request.method == 'POST':
         if request.form['submit_button'] == 'Next week':
             i = 0
@@ -56,4 +58,4 @@ def admin():
 
             db.session.commit()
 
-    return render_template('admin.html', user=current_user, system=localSystem)
+    return render_template('admin.html', user=current_user, system=localSystem, users=users, movies=movies)

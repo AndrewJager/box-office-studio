@@ -53,6 +53,20 @@ body {
   border-color: var(--purple);
 }
 
+.nav-item > .active {
+  border-color: var(--dark-grey)!important;
+  border-width: 3px;
+  border-bottom: none;
+  background-color: var(--dark-grey)!important;
+}
+
+.nav-item {
+  border-color: var(--dark-grey)!important;
+  border-width: 3px;
+  border-bottom: none;
+  background-color: var(--dark-grey)!important;
+}
+
 .text-custom { /* Hate this, but it works */
   color: var(--text-grey)!important;
 }
