@@ -5,7 +5,7 @@
 <div class="row">
   <div class="col-sm-4 text-center">
     <h1>{{ thisUser.name }}</h1>
-    <a href="studio/{{ thisUser.name }}"><strong>Studio: </strong> {{ thisUser.studio }}</a>
+    <strong>Studio: </strong> {{ thisUser.studio }}
     {% if user.name == thisUser.name %}
         <br>
         <form method="post">

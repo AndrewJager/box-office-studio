@@ -5,8 +5,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script>
 function runGraph(results, titles){
+    console.log(results);
+    console.log(titles);
     let resultsArray = results.replace('[','').replace(']','').split(",");
-    let titleArray = titles.replace('[','').replace(']','').split(",");
+    let titleArray = titles.replace('[','').replace(']','').replace(/\'/g, "").split(",");
     console.log(resultsArray);
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -59,7 +61,9 @@ function runGraph(results, titles){
     <div class="col-sm-6">
         <canvas id="myChart" width="400" height="400"></canvas>
         <script>
-            runGraph('{{ data["results_arr"]|safe + ", " + data["titles"]|safe }}');     
+            var data = '{{ data["results_arr"] | safe }}';
+            var titles =  "{{ data['titles']  | safe }}";
+            runGraph(data, titles);     
         </script>
     </div>
     <div class="col-sm-6">

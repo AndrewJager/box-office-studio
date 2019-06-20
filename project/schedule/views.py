@@ -39,9 +39,16 @@ def schedules(offset):
 @schedule_blueprint.route('/boxoffice')
 def boxoffice():
     localSystem = BoxOffice.query.first()
-    results = Results.query.filter_by(date=localSystem.currentDate).all()
+    date = localSystem.currentDate
+    data = {}
+    data['results'] = Results.query.filter_by(date=date).order_by(Results.movie_gross.desc()).all()
+    data['results_arr'] = []
+    data['titles'] = []
+    for i in data['results']:
+        data['results_arr'].append(i.movie_gross)
+        data['titles'].append(i.movie)
     
-    return render_template("boxoffice.html", user=current_user, system=localSystem, results=results, offset=0)
+    return render_template("boxoffice.html", user=current_user, system=localSystem, data=data, offset=0)
 
 @schedule_blueprint.route('/boxoffice/<string:offset>')
 def boxoffices(offset):
