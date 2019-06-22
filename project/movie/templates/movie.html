@@ -18,46 +18,68 @@
     <h3>{{ movie.title }}</h3>
     <h5>Presented by {{ movie.studio }}</h5>
     {% if movie.release_date %}
-    <h5>{{ movie.release_date }}</h5>
+        <h5>{{ movie.release_date }}</h5>
     {% endif %}
-
     <hr>
 
     {% if user.studio == movie.studio %}
         <h3>Actions</h3>
-        {% if movie.status != "Released" and movie.status != "Closed" %}
-        <form method="post">
-            <div class="form-group">
-                <label for="releaseDate">Change release date</label><br>
-                Date: <input type="text" id="calendar" name="release_date">
-                <input type="submit" name="submit_button" value="Change date">
-            </div>
-            <!-- <div class="form-group">
-                <label for="releaseDate">Change international release date (Friday only)(3M)</label><br>
-                <input type="date" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
-                request.form.date }}">
-                <input type="submit" name="submit_button" value="Change int date">
-            </div>
-            <div class="form-group">
-                <label for="releaseDate">Change China release date (Friday only)(5M)</label><br>
-                <input type="date" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
-                request.form.date }}">
-                <input type="submit" name="submit_button" value="Change china date">
-            </div> <br>  -->
-        </form>
-        <form method="post">
-            <input type="submit" name="submit_button" value="Release trailer">
-        </form>
-        <form method="post">
-            <input type="submit" name="submit_button" value="Cancel movie">
-        </form>
-        <br>
+        {% if movie.status == "Pre-production" or movie.status == "Filming" or movie.status == "Post-production" %}
+        <a class="btn btn-secondary" data-toggle="collapse" href="#controlsProduction" role="button" aria-expanded="false" aria-controls="controlsProduction">
+            Production
+        </a>
+        <div class="collapse" id="controlsProduction">
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="poster">
+                <input type="submit" name="submit_button" value="Change poster">
+            </form>
+            <hr>
+        </div>
         {% endif %}
-        <form method="post" enctype="multipart/form-data">
-            <input type="file" name="poster">
-            <input type="submit" name="submit_button" value="Change poster">
-        </form>
-        <hr>
+        {% if movie.status != "Released" and movie.status != "Closed" %}
+        <a class="btn btn-secondary" data-toggle="collapse" href="#controlsMarketing" role="button" aria-expanded="false" aria-controls="controlsMarketing">
+            Marketing
+        </a>
+        <div class="collapse" id="controlsMarketing">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="releaseDate">Change release date</label><br>
+                        Date: <input type="text" id="calendar" name="release_date">
+                        <input type="submit" name="submit_button" value="Change date">
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="releaseDate">Change international release date (Friday only)(3M)</label><br>
+                        <input type="date" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
+                        request.form.date }}">
+                        <input type="submit" name="submit_button" value="Change int date">
+                    </div>
+                    <div class="form-group">
+                        <label for="releaseDate">Change China release date (Friday only)(5M)</label><br>
+                        <input type="date" id="releaseDate" name="release_date" min="{{ movie.end_date }}" value="{{
+                        request.form.date }}">
+                        <input type="submit" name="submit_button" value="Change china date">
+                    </div> <br>  -->
+                </form>
+                <form method="post">
+                    <input type="submit" name="submit_button" value="Release trailer">
+                </form>
+                <form method="post">
+                    <input type="submit" name="submit_button" value="Cancel movie">
+                </form>
+            <hr>
+        </div>
+        {% endif %}
+
+        <a class="btn btn-secondary" data-toggle="collapse" href="#controlsOther" role="button" aria-expanded="false" aria-controls="controlsOther">
+            Other
+        </a>
+        <div class="collapse" id="controlsOther">
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="poster">
+                <input type="submit" name="submit_button" value="Change poster">
+            </form>
+            <hr>
+        </div>
     {% endif %}
     </div>
     <div class="col-md-6 text-center">
