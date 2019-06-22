@@ -45,7 +45,7 @@ def admin():
             db.session.commit()
         elif request.form['submit_button'] == 'Reset':
             BoxOffice.query.delete()
-            db.session.add(BoxOffice("2019-3-1"))
+            db.session.add(BoxOffice("2019-3-4"))
             DateChange.query.delete()
             movies = Movie.query.all()
             for movie in movies:

@@ -43,7 +43,7 @@
         <hr>
         {% for result in data['boxOffice'] %}
             <strong>{{ result.movie }}:</strong>
-            {{ result.movie_gross }}
+            {{ result.movie_gross|round(2) }}
             <hr>
         {% endfor %}
     </div>

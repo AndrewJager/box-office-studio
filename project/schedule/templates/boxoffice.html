@@ -44,17 +44,37 @@ function runGraph(results, titles){
 {% endblock %}
 
 {% block content %}
-
+<div class="row">
+    <a class="btn btn-secondary {{ 'active-custom' if data['type'] == 'weekly' else '' }}" href="/boxoffice/weekly">Weekly</a>
+    <a class="btn btn-secondary {{ 'active-custom' if data['type'] == 'weekend' else '' }}" href="/boxoffice/weekend">Weekend</a>
+    <a class="btn btn-secondary {{ 'active-custom' if data['type'] == 'daily' else '' }}" href="/boxoffice/daily">Daily</a>
+</div>
 
 <div class="row pt-3">
     <div class="col-sm-2">
-        <a class="btn btn-secondary btn-block" href= "/boxoffice/{{ offset - 1 }}">Previous</a>
+        {% if data['type'] == 'weekly' %}
+            <a class="btn btn-secondary btn-block" href= "/boxoffice/weekly/{{ offset - 1 }}">Previous</a>
+        {% endif %}
+        {% if data['type'] == 'weekend' %}
+            <a class="btn btn-secondary btn-block" href= "/boxoffice/weekend/{{ offset - 1 }}">Previous</a>
+        {% endif %}
+        {% if data['type'] == 'daily' %}
+            <a class="btn btn-secondary btn-block" href= "/boxoffice/daily/{{ offset - 1 }}">Previous</a>
+        {% endif %}
     </div>
     <div class="col-sm-8 text-center">
-        <h1>Results - {{ data["date"] }}</h1>
+        <h1>Results - {{ data['date'] }}</h1>
     </div>
     <div class="col-sm-2">
-        <a class="btn btn-secondary btn-block" href= "/boxoffice/{{ offset + 1 }}">Next</a>
+        {% if data['type'] == 'weekly' %}
+            <a class="btn btn-secondary btn-block" href= "/boxoffice/weekly/{{ offset + 1 }}">Next</a>
+        {% endif %}
+        {% if data['type'] == 'weekend' %}
+            <a class="btn btn-secondary btn-block" href= "/boxoffice/weekend/{{ offset + 1 }}">Next</a>
+        {% endif %}
+        {% if data['type'] == 'daily' %}
+            <a class="btn btn-secondary btn-block" href= "/boxoffice/daily/{{ offset + 1 }}">Next</a>
+        {% endif %}
     </div>
 </div>
 <hr>
