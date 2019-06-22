@@ -13,8 +13,10 @@ home_blueprint = Blueprint(
 @home_blueprint.route('/')
 def home():
     localSystem = BoxOffice.query.first()
-    news = db.session.query(User).all()
-    changes = db.session.query(MovieChange).all()
-    dateChanges = db.session.query(DateChange).all()
-    return render_template("index.html", user=current_user, news=news, moviechanges=changes, dateChanges=dateChanges, system=localSystem)
+    data = {}
+    data['news'] = db.session.query(Announcement).all()
+    data['changes'] = db.session.query(MovieChange).all()
+    data['dateChanges'] = db.session.query(DateChange).all()
+    data['boxOffice'] = Results.query.filter_by(date=(localSystem.currentDate - datetime.timedelta(days=1))).order_by(Results.movie_gross.desc()).all()
+    return render_template("index.html", user=current_user, system=localSystem, data=data)
 

@@ -2,20 +2,20 @@
 {% set active_page = "home" %}
 {% block content %}
 
-<h1>Front Page Header</h1>
+<h1>Game date: {{ system.currentDate }}</h1>
 <br>
 <div class="row vl text-center">
     <div class="col-sm-4">
         <strong>News</strong>
         <hr>
-        {% for post in news %}
+        {% for post in data['news'] %}
 
         {% endfor %}
     </div>
     <div class="col-sm-4">
         <strong>Changes</strong>
         <hr>
-        {% for movie in moviechanges %}
+        {% for movie in data['changes'] %}
             {% if movie.created %}
                 <strong>Movie announced</strong>
                 <small><p><a href="/movie/{{ movie.movie }}">{{ movie.movie }}</a> has been announced</p></small>
@@ -26,7 +26,7 @@
                 <hr>
             {% endif %}
         {% endfor %}
-        {% for date in dateChanges %}
+        {% for date in data['dateChanges'] %}
             {% if date.oldDate != None %}
                 <strong>Release date change</strong>
                 <small><p><a href="/movie/{{ date.movie }}">{{ date.movie }}</a> moves to {{ date.newDate }} from {{ date.oldDate }}</p></small>
@@ -39,8 +39,13 @@
         {% endfor %}
     </div>
     <div class="col-sm-4">
-        <strong>Box office</strong>
+        <strong>Yesterday's box office</strong>
         <hr>
+        {% for result in data['boxOffice'] %}
+            <strong>{{ result.movie }}:</strong>
+            {{ result.movie_gross }}
+            <hr>
+        {% endfor %}
     </div>
 </div>
 
