@@ -5,6 +5,7 @@ from flask_login import current_user
 import datetime
 from cloudinary.uploader import upload, destroy
 from cloudinary.utils import cloudinary_url
+import constants
 
 movie_blueprint = Blueprint(
     'movie', __name__,
@@ -15,19 +16,21 @@ movie_blueprint = Blueprint(
 def movie(id):
     movie = Movie.query.filter_by(title=id).first()
     results = Results.query.filter_by(movie=movie.title).order_by(Results.date).all()
-    resultsList = []
+    data = {}
+    data["consts"] = constants
+    data["resultsList"] = []
     for i in results:
-        resultsList.append(round(i.movie_gross, 2))
+        data["resultsList"].append(round(i.movie_gross, 2))
     localSystem = BoxOffice.query.first()
     user = current_user
     allMovies = Movie.query.all()
-    dates = []
+    data["dates"] = []
     for film in allMovies:
         if film.release_date != None:
             date = film.release_date
-            dates.append(date.strftime('%m/%d/%y'))
-    localSystem.dates = dates
-    localSystem.results = resultsList
+            data["dates"].append(date.strftime('%m/%d/%y'))
+    
+
 
     if request.method == 'POST':
         if request.form['submit_button'] == 'Change date':
@@ -46,15 +49,17 @@ def movie(id):
                 db.session.commit()
                 
         elif request.form['submit_button'] == 'Release trailer':
-            pass # do something else
+            movie.trailers = 1
+            movie.advertising_spent += constants.TRAILER_COST
+            db.session.commit()
+
         elif request.form['submit_button'] == 'Cancel movie':
             user.cash = user.cash + (movie.budget - movie.budget_spent)
             destroy('Box-Office-Studio/Posters/' + movie.title)
             changes = DateChange.query.filter_by(movie=movie.title).delete()
-           # db.session.delete(changes)
             db.session.add(MovieChange(movie.title, user.studio, localSystem.currentDate, False))
             db.session.delete(movie)
             db.session.commit()
             return redirect(url_for('studio.studio'))
 
-    return render_template("movie.html", user=current_user, movie=movie, system=localSystem)
+    return render_template("movie.html", user=current_user, movie=movie, system=localSystem, data=data)

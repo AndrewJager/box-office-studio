@@ -27,3 +27,7 @@ STUDIO_CUT_USA = 0.50
 # Later weekends calculated as a whole based on audience reception alone, and broken up to individual days based on simple modifiers
 #
 # Holidays get a simple boost
+
+
+#marketing
+TRAILER_COST = 5.0

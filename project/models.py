@@ -31,6 +31,7 @@ class Movie(db.Model):
     budget_spent = db.Column(db.Integer, nullable=False)
     advertising = db.Column(db.Integer, nullable=False)
     advertising_spent = db.Column(db.Integer, nullable=False)
+    trailers = db.Column(db.Integer)
     dom_gross = db.Column(db.Integer)
     int_gross = db.Column(db.Integer)
     china_gross = db.Column(db.Integer)
@@ -47,6 +48,7 @@ class Movie(db.Model):
         self.budget_spent = 0
         self.advertising = 0
         self.advertising_spent = 0
+        self.trailers = 0
         self.poster = ""
         self.dom_gross = 0
         self.int_gross = 0

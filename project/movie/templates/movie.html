@@ -4,7 +4,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script src="/static/movie-graph.js"></script>
 <script>
-    runDatepicker("{{ movie.getProductionEnd() }}", "{{ system.dates|safe }}");
+    runDatepicker("{{ movie.getProductionEnd() }}", "{{ data['dates']|safe }}");
 </script>
 {% endblock %}
 
@@ -60,9 +60,13 @@
                         <input type="submit" name="submit_button" value="Change china date">
                     </div> <br>  -->
                 </form>
-                <form method="post">
-                    <input type="submit" name="submit_button" value="Release trailer">
-                </form>
+                {% if movie.trailers == 0 %}
+                    <form method="post">
+                        <input type="submit" name="submit_button" value="Release trailer">
+                        <span class="text-danger">${{ data['consts'].TRAILER_COST }}</span>
+                    </form>
+                    <br>
+                {% endif %}
                 <form method="post">
                     <input type="submit" name="submit_button" value="Cancel movie">
                 </form>
@@ -87,7 +91,7 @@
         <h3>Stats</h3>
             <canvas id="myChart" width="400" height="400"></canvas>
             <script>
-                runGraph('{{ system.results|safe }}');     
+                runGraph("{{ data['resultsList']|safe }}");     
             </script>
             <hr>
         {% endif %}
@@ -103,10 +107,11 @@
         <tr><td><strong>End filming: </strong></td> <td>{{ movie.getFilmingEnd() }} </td></tr>
         <tr><td><strong>End post-production: </strong></td> <td>{{ movie.getProductionEnd() }} </td></tr>
         <tr><td><strong>Scale: </strong></td> <td>{{ movie.getScale() }} </td></tr>
+        <tr><td><strong>Spent on advertising: </strong></td> <td>{{ movie.advertising_spent }} </td></tr>
         {% if movie.status == "Released" %}
-        <tr><td><strong>Domestic gross: </strong></td> <td>{{ movie.dom_gross }} </td></tr>  
-        <tr><td><strong>China gross: </strong></td> <td>{{ movie.china_gross }} </td></tr> 
-        <tr><td><strong>Worldwide gross: </strong></td> <td>{{ movie.int_gross }} </td></tr>   
+            <tr><td><strong>Domestic gross: </strong></td> <td>{{ movie.dom_gross }} </td></tr>  
+            <tr><td><strong>China gross: </strong></td> <td>{{ movie.china_gross }} </td></tr> 
+            <tr><td><strong>Worldwide gross: </strong></td> <td>{{ movie.int_gross }} </td></tr>   
         {% endif %}
         </table>
         <hr>
