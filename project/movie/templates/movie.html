@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
+<script src="/static/library/chart.js"></script>
 <script src="/static/datepicker.js"></script> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 <script src="/static/movie-graph.js"></script>
 <script>
     runDatepicker("{{ movie.getProductionEnd() }}", "{{ data['dates']|safe }}");
