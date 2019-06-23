@@ -7,11 +7,6 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <a class="btn btn-secondary {{ 'active-custom' if data['type'] == 'weekly' else '' }}" href="/boxoffice/weekly">Weekly</a>
-    <a class="btn btn-secondary {{ 'active-custom' if data['type'] == 'weekend' else '' }}" href="/boxoffice/weekend">Weekend</a>
-    <a class="btn btn-secondary {{ 'active-custom' if data['type'] == 'daily' else '' }}" href="/boxoffice/daily">Daily</a>
-</div>
 
 <div class="row pt-3">
     <div class="col-sm-2">
@@ -26,7 +21,11 @@
         {% endif %}
     </div>
     <div class="col-sm-8 text-center">
-        <h1>Results - {{ data['date'] }}</h1>
+        {% if data['type'] == 'daily' %}
+            <h1>Results for {{ data['date'] }}</h1>
+        {% else %}
+            <h1>Results for {{ data['startdate'] }} - {{ data['date'] }}</h1>
+        {% endif %}
     </div>
     <div class="col-sm-2">
         {% if data['type'] == 'weekly' %}
@@ -37,6 +36,25 @@
         {% endif %}
         {% if data['type'] == 'daily' %}
             <a class="btn btn-secondary btn-block" href= "/boxoffice/daily/{{ offset + 1 }}">Next</a>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm text-center mt-1">
+        {% if data['type'] == 'weekly' %}
+            <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'weekend' else '' }}" href="/boxoffice/weekend/{{ offset }}">Weekend</a>
+            <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'weekly' else '' }}" href="/boxoffice/weekly/{{ offset }}">Weekly</a>
+            <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'daily' else '' }}" href="/boxoffice/daily/{{ offset * 7 }}">Daily</a>
+        {% endif %}
+        {% if data['type'] == 'weekend' %}
+            <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'weekend' else '' }}" href="/boxoffice/weekend/{{ offset }}">Weekend</a>
+            <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'weekly' else '' }}" href="/boxoffice/weekly/{{ offset }}">Weekly</a>
+            <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'daily' else '' }}" href="/boxoffice/daily/{{ offset * 7 }}">Daily</a>
+        {% endif %}
+        {% if data['type'] == 'daily' %}
+            <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'weekend' else '' }}" href="/boxoffice/weekend/{{ (offset/7) | int }}">Weekend</a>
+            <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'weekly' else '' }}" href="/boxoffice/weekly/{{ (offset/7) | int }}">Weekly</a>
+            <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'daily' else '' }}" href="/boxoffice/daily/{{ offset }}">Daily</a>
         {% endif %}
     </div>
 </div>

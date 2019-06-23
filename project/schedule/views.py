@@ -95,6 +95,7 @@ def boxofficeweekend():
     data['results_arr'] = []
     data['titles'] = []
     data['date'] = date
+    data['startdate'] = date - datetime.timedelta(days=2)
     
     totals = {}
     for i in data['results']:
@@ -120,10 +121,10 @@ def boxofficeweekends(offset):
     data['results_arr'] = []
     data['titles'] = []
     data['date'] = date
+    data['startdate'] = date - datetime.timedelta(days=2)
     
     totals = {}
     for i in data['results']:
-        data['day'] = i.date.weekday()
         if not i.movie in totals:
             total = SumResults(str(i.movie))
             totals[i.movie] = total
@@ -145,10 +146,10 @@ def boxofficeweekly():
     data['results_arr'] = []
     data['titles'] = []
     data['date'] = date
+    data['startdate'] = date - datetime.timedelta(days=6)
     
     totals = {}
     for i in data['results']:
-        data['day'] = i.date.weekday()
         if not i.movie in totals:
             total = SumResults(str(i.movie))
             totals[i.movie] = total
@@ -170,6 +171,7 @@ def boxofficeweeklys(offset):
     data['results_arr'] = []
     data['titles'] = []
     data['date'] = date
+    data['startdate'] = date - datetime.timedelta(days=6)
     
     totals = {}
     for i in data['results']:
