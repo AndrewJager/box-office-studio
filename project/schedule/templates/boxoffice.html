@@ -8,8 +8,17 @@
 
 {% block content %}
 
-<div class="row pt-3">
-    <div class="col-sm-2">
+<div class="row mt-3">
+    <div class="col-sm-12 text-center">
+        {% if data['type'] == 'daily' %}
+            <h2>Results for {{ data['date'] }}</h2>
+        {% else %}
+            <h2>Results for {{ data['startdate'] }} - {{ data['date'] }}</h2>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2 text-center mt-2">
         {% if data['type'] == 'weekly' %}
             <a class="btn btn-secondary btn-block" href= "/boxoffice/weekly/{{ offset - 1 }}">Previous</a>
         {% endif %}
@@ -20,14 +29,8 @@
             <a class="btn btn-secondary btn-block" href= "/boxoffice/daily/{{ offset - 1 }}">Previous</a>
         {% endif %}
     </div>
-    <div class="col-sm-8 text-center">
-        {% if data['type'] == 'daily' %}
-            <h1>Results for {{ data['date'] }}</h1>
-        {% else %}
-            <h1>Results for {{ data['startdate'] }} - {{ data['date'] }}</h1>
-        {% endif %}
-    </div>
-    <div class="col-sm-2">
+    <div class="col-sm-8"></div>
+    <div class="col-sm-2 text-center mt-2">
         {% if data['type'] == 'weekly' %}
             <a class="btn btn-secondary btn-block" href= "/boxoffice/weekly/{{ offset + 1 }}">Next</a>
         {% endif %}
@@ -40,7 +43,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm text-center mt-1">
+    <div class="col-sm text-center mt-2">
         {% if data['type'] == 'weekly' %}
             <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'weekend' else '' }}" href="/boxoffice/weekend/{{ offset }}">Weekend</a>
             <a class="btn btn-secondary text-custom {{ 'active-custom' if data['type'] == 'weekly' else '' }}" href="/boxoffice/weekly/{{ offset }}">Weekly</a>
