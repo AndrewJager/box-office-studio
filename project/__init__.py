@@ -21,6 +21,7 @@ from project.schedule.views import schedule_blueprint
 from project.movie.views import movie_blueprint
 from project.studio.views import studio_blueprint
 from project.admin.views import admin_blueprint
+from project.forum.views import forum_blueprint
 
 app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
@@ -28,6 +29,7 @@ app.register_blueprint(schedule_blueprint)
 app.register_blueprint(movie_blueprint)
 app.register_blueprint(studio_blueprint)
 app.register_blueprint(admin_blueprint)
+app.register_blueprint(forum_blueprint)
 
 from project.models import User
 
