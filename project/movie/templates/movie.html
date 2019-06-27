@@ -20,6 +20,13 @@
     {% if movie.release_date %}
         <h5>{{ movie.release_date }}</h5>
     {% endif %}
+    {% if movie.status == "Pre-production" or movie.status == "Filming" or movie.status == "Post-production" %}
+    <div class="progress">
+        <div class="progress-bar bg-success text-dark" role="progressbar" style="width: {{ data['productionPercent'] }}%" aria-valuenow="{{ data['productionPercent'] }}" aria-valuemin="0" aria-valuemax="100">
+            &nbsp{{ movie.status }} - {{ data["productionPercent"] | round(1) }}% completed
+        </div>
+    </div>
+    {% endif %}
     <hr>
 
     {% if user.studio == movie.studio %}

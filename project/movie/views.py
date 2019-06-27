@@ -29,8 +29,10 @@ def movie(id):
         if film.release_date != None:
             date = film.release_date
             data["dates"].append(date.strftime('%m/%d/%y'))
-    
 
+    productionLength = movie.getProductionEnd() - movie.production_date
+    productionCompleted = localSystem.currentDate - movie.production_date
+    data["productionPercent"] = (productionCompleted / productionLength) * 100
 
     if request.method == 'POST':
         if request.form['submit_button'] == 'Change date':
