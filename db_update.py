@@ -3,9 +3,8 @@
 from project import db
 from project.models import *
 
-movies = db.session.query(Movie).all()
-for m in movies:
-    m.trailers = 0
-
+sections = db.session.query(ForumSection).all()
+for i in sections:
+    db.session.delete(i)
 
 db.session.commit()

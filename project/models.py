@@ -229,3 +229,22 @@ class Results(db.Model):
         self.date = date
         self.movie = movie
         self.movie_gross = gross
+
+
+class ForumSection(db.Model): #basicly a list of threads
+    __tablename__ = "forumSection"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    threads = db.relationship('Thread', backref='forumSection', lazy=True)
+
+    def __init__(self, name):
+        self.name = name
+
+
+class Thread(db.Model):
+    __tablename__ = "threads"
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, nullable=False)
+    section_id = db.Column(db.Integer, db.ForeignKey('forumSection.id'), nullable=False)

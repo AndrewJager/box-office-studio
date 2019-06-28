@@ -13,10 +13,6 @@ def studio():
     error = None
     localSystem = BoxOffice.query.first()
     user = current_user
-    movies = {}
-    movies[0] = Movie.query.filter_by(studio=user.studio).filter(Movie.release_date > localSystem.currentDate).order_by(Movie.release_date).all()
-    movies[1] = Movie.query.filter_by(studio=user.studio).filter(Movie.release_date <= localSystem.currentDate).order_by(Movie.release_date).all()
-    movies[2] = Movie.query.filter_by(studio=user.studio).filter_by(release_date = None).order_by(Movie.release_date).all()
     if request.method == "POST":
         if 'title' in request.form:
             canAdd = Movie.query.filter_by(title=request.form['title']).first()
@@ -30,8 +26,9 @@ def studio():
                     error="Movie budget must be at least one"
             else:
                 error="A movie with that title exists"
-            return render_template("studio.html", error=error, user=current_user, system=localSystem, movies=movies)
-            return redirect(url_for('home.home'))
-            
-    else:
-        return render_template("studio.html", user=current_user, system=localSystem, movies=movies)
+
+    movies = {}
+    movies[0] = Movie.query.filter_by(studio=user.studio).filter(Movie.release_date > localSystem.currentDate).order_by(Movie.release_date).all()
+    movies[1] = Movie.query.filter_by(studio=user.studio).filter(Movie.release_date <= localSystem.currentDate).order_by(Movie.release_date).all()
+    movies[2] = Movie.query.filter_by(studio=user.studio).filter_by(release_date = None).order_by(Movie.release_date).all()
+    return render_template("studio.html", user=current_user, system=localSystem, movies=movies, error=error)

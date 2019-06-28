@@ -1,5 +1,23 @@
 {% extends "base.html" %}
-{% set active_page = "admin" %}
+{% set active_page = "forum" %}
 {% block content %}
 <h1>Test</h1>
+
+{% if user.isAdmin %}
+    <form method="post">
+        <input class="btn btn-success" type="submit" name="submit_button" value="Add section">
+        <input type="text" name='newName'>
+    </form>
+{% endif %}
+
+{% for section in sections %}
+    <h3>{{ section.name }}</h3>
+    <a class="btn btn-secondary" data-toggle="collapse" href="#{{ section.name }}" role="button" aria-expanded="false" aria-controls="controlsMarketing">
+        {{ section.name }}
+    </a>
+    <div class="collapse" id="{{ section.name }}">
+        test
+    </div>
+{% endfor %}
+
 {% endblock %}
